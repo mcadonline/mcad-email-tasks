@@ -1,19 +1,5 @@
 const huginn = require('./index');
 
-// TEST
-
-// huginn({
-//   data,
-//   to: ({ name, email }) => `${name} <${email}>`,
-//   from: () => 'MCAD Online Learning <online@mcad.edu>',
-//   subject: ({ name }) => `Hey ${name}!`,
-//   body: ({ name }) => `
-//     <h1>Hey ${name}</h1>
-//   `,
-//   css:
-//   send: false,
-// });
-
 describe('huginn generates messages for postmarkClient consumption', () => {
   const data = [
     { name: 'Test 1', email: 'jjohnson136+test1@mcad.edu' },
