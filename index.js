@@ -1,46 +1,8 @@
 const path = require('path');
 const Email = require('email-templates');
 const previewEmail = require('preview-email');
-const { DateTime } = require('luxon');
 const getCanvasStudentsStartingSoonFromJex = require('./lib/getCanvasStudentsFromJex');
-
-// function sendEmail(messageObj) {
-//   console.log(messageObj);
-// }
-
-/**
- * last two digits of a given year
- * @param {Int|String} year
- */
-function toShortYear(year) {
-  return year.toString().slice(-2);
-}
-
-function toHyphenatedCourseCode(courseCode) {
-  return courseCode.replace(/\s+/g, '-');
-}
-
-function getSundayBefore(date) {
-  const dt = DateTime.fromJSDate(date);
-  // jex dates aren't really UTC
-  // so adjust by offset
-  const correctedDate = dt.plus({ minutes: -1 * dt.offset });
-
-  // d.weekday is the number of days after Sunday
-  // so we subtract d.weekday to get back to Sunday
-  return correctedDate.minus({ days: correctedDate.weekday }).toJSDate();
-}
-
-function toPrettyDate(date) {
-  const dt = DateTime.fromJSDate(date);
-  // jex dates aren't really UTC
-  // so adjust by offset
-  const correctedDate = dt.plus({ minutes: -1 * dt.offset });
-  const prettyDate = correctedDate.toLocaleString(DateTime.DATE_MED);
-  return `${correctedDate.weekdayShort}, ${prettyDate}`;
-}
-
-const getCourseId = ({ courseCode, term, year }) => `${toHyphenatedCourseCode(courseCode)}-${term}${toShortYear(year)}`;
+const cleanJexData = require('./lib/cleanJexData');
 
 // data is for multiple messages
 
@@ -70,12 +32,8 @@ function generateEmails({ template, data }) {
         preferredName,
         mcadEmail,
         personalEmail,
-        courseCode,
-        term,
-        year,
+        courseId,
       } = messageData;
-
-      const courseId = getCourseId({ courseCode, term, year });
 
       const [html, text] = await Promise.all([
         email.render(`${template}/html`, messageData),
@@ -98,21 +56,10 @@ function generateEmails({ template, data }) {
   );
 }
 
-const cleanData = ({
-  firstName, preferredName, startDate, endDate, credits, ...rest
-}) => ({
-  ...rest,
-  credits: credits === 0 ? 'non-credit' : `${credits} cr.`,
-  firstName: preferredName || firstName,
-  startDate: toPrettyDate(startDate),
-  endDate: toPrettyDate(endDate),
-  openDate: toPrettyDate(getSundayBefore(startDate)),
-});
-
 async function main({ mockTodaysDate = null }) {
   const canvasStudentsStartingSoon = await getCanvasStudentsStartingSoonFromJex(mockTodaysDate);
 
-  const data = canvasStudentsStartingSoon.map(cleanData);
+  const data = canvasStudentsStartingSoon.map(cleanJexData);
 
   const emails = await generateEmails({
     template: 'canvasOrientation',
