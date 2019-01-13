@@ -1,6 +1,6 @@
 const huginn = require('./index');
 
-describe('huginn generates messages for postmarkClient consumption', () => {
+describe('generates messages for postmarkClient consumption', () => {
   const data = [
     { name: 'Test 1', email: 'jjohnson136+test1@mcad.edu' },
     { name: 'Test 2', email: 'jjohnson136+test2@mcad.edu' },
