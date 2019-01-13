@@ -1,69 +1,26 @@
-const path = require('path');
-const Email = require('email-templates');
 const previewEmail = require('preview-email');
-const getCanvasStudentsStartingSoonFromJex = require('./lib/getCanvasStudentsFromJex');
+const generateEmails = require('./lib/generateEmails');
 const cleanJexData = require('./lib/cleanJexData');
-
-// data is for multiple messages
-
-function generateEmails({ template, data }) {
-  const relativeTo = path.join(__dirname, `./emails/${template}`);
-  console.log(relativeTo);
-  const email = new Email({
-    views: {
-      options: {
-        extension: 'hbs',
-      },
-    },
-    juice: true,
-    juiceResources: {
-      preserveImportant: true,
-      webResources: {
-        relativeTo,
-      },
-    },
-  });
-
-  return Promise.all(
-    data.map(async (messageData) => {
-      const {
-        firstName,
-        lastName,
-        preferredName,
-        mcadEmail,
-        personalEmail,
-        courseId,
-      } = messageData;
-
-      const [html, text] = await Promise.all([
-        email.render(`${template}/html`, messageData),
-        email.render(`${template}/text`, messageData),
-      ]);
-
-      const message = {
-        to: [
-          `${preferredName || firstName} ${lastName} <${personalEmail}>`,
-          `${preferredName || firstName} ${lastName} <${mcadEmail}>`,
-        ].join(', '),
-        from: 'MCAD Online Learning <online@mcad.edu>',
-        subject: `❗[${courseId}] Canvas LMS Orientation`,
-        text,
-        html,
-      };
-
-      return message;
-    }),
-  );
-}
+const getCanvasStudentsStartingSoonFromJex = require('./lib/getCanvasStudentsFromJex');
 
 async function main({ mockTodaysDate = null }) {
   const canvasStudentsStartingSoon = await getCanvasStudentsStartingSoonFromJex(mockTodaysDate);
 
   const data = canvasStudentsStartingSoon.map(cleanJexData);
 
+  const to = ({
+    firstName, lastName, personalEmail, mcadEmail,
+  }) => [`${firstName} ${lastName} <${personalEmail}>`, `${firstName} ${lastName} <${mcadEmail}>`].join(
+    ', ',
+  );
+
+  const from = () => 'MCAD Online Learning <online@mcad.edu>';
+
   const emails = await generateEmails({
     template: 'canvasOrientation',
     data,
+    to,
+    from,
   });
 
   // emails.map(sendEmail);
