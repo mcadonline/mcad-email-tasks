@@ -6,7 +6,7 @@
   "scripts": {
     "test:watch": "jest --watch",
     "test": "jest",
-    "start": "nodemon ./index.js --watch . --ext 'js,json,hbs,css'"
+    "start": "nodemon ./index.js --watch . --ext 'js,json,hbs,css,sql'"
   },
   "author": "",
   "license": "ISC",

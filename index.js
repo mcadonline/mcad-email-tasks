@@ -1,36 +1,10 @@
-const previewEmail = require('preview-email');
-const generateEmails = require('./lib/generateEmails');
-const cleanJexData = require('./lib/cleanJexData');
-const getCanvasStudentsStartingSoonFromJex = require('./lib/getCanvasStudentsFromJex');
+const sendCanvasOrientationEmails = require('./emails/canvasOrientation');
 
-async function main({ mockTodaysDate = null }) {
-  const canvasStudentsStartingSoon = await getCanvasStudentsStartingSoonFromJex(mockTodaysDate);
+async function main(opts) {
+  const asyncTasksArray = [sendCanvasOrientationEmails(opts)];
 
-  const data = canvasStudentsStartingSoon.map(cleanJexData);
-
-  const to = ({
-    firstName, lastName, personalEmail, mcadEmail,
-  }) => [`${firstName} ${lastName} <${personalEmail}>`, `${firstName} ${lastName} <${mcadEmail}>`].join(
-    ', ',
-  );
-
-  const from = () => 'MCAD Online Learning <online@mcad.edu>';
-
-  const emails = await generateEmails({
-    template: 'canvasOrientation',
-    data,
-    to,
-    from,
-  });
-
-  // emails.map(sendEmail);
-  previewEmail(emails[0])
-    .then(console.log)
-    .catch(console.error);
-
-  console.log(emails[0].text);
+  await Promise.all(asyncTasksArray);
+  console.log('Tasks Complete');
 }
 
-main({
-  mockTodaysDate: '2019-01-15',
-});
+main({ mockTodayAs: '2019-01-15', preview: true });

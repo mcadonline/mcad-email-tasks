@@ -1,19 +1,15 @@
-const sql = require('mssql');
-const settings = require('../settings');
+const path = require('path');
+const previewEmail = require('preview-email');
+const jex = require('../../services/jex');
+const generateEmails = require('../../lib/generateEmails');
 
-// get students participating in canvas pilot
-// where the course opens in 1 week
-// or the course opens in less than 1 week and
-// the student has just added
-// these are students which need to receive the Canvas orientation
-// page
-const createSqlQuery = (mockDateAsToday) => {
-  const today = mockDateAsToday ? `'${mockDateAsToday}'` : 'getdate()';
+const createSQL = ({ mockTodayAs }) => {
+  const quotedDateOrGetDate = mockTodayAs ? `'${mockTodayAs}'` : 'getdate()';
   return `
 declare @today datetime;
 declare @tomorrow datetime;
 declare @weekfromnow  datetime;
-set @today = ${today};
+set @today = ${quotedDateOrGetDate}
 set @tomorrow = dateadd(day,1,@today);
 set @weekfromnow = dateadd(day, cast(7 as int), @today);
 
@@ -71,28 +67,39 @@ where sch.crs_cde in (
         and sch.add_dte < @tomorrow
     )
   )
-`;
+  `;
 };
 
-function cleanData(entry) {
-  return entry;
-}
+const to = ({
+  firstName, lastName, personalEmail, mcadEmail,
+}) => `
+  ${firstName} ${lastName} <${personalEmail}>, 
+  ${firstName} ${lastName} <${mcadEmail}>
+`;
 
-async function getCanvasStudentsFromJex(mockDateToday) {
-  const {
-    username, password, server, database,
-  } = settings.jex;
-  const uri = `mssql://${username}:${password}@${server}/${database}`;
-  try {
-    const query = createSqlQuery(mockDateToday);
-    const pool = await sql.connect(uri);
-    const result = await pool.request().query(query);
-    pool.close();
-    return result.recordset.map(cleanData);
-  } catch (err) {
-    console.error(err);
-    throw err;
+const from = () => 'MCAD Online Learning <online@mcad.edu>';
+
+async function sendCanvasOrientationEmails({ mockTodayAs, send, preview }) {
+  const sql = createSQL({ mockTodayAs });
+  const data = await jex.query(sql);
+  const emails = await generateEmails({
+    template: path.basename(__dirname),
+    data,
+    to,
+    from,
+  });
+
+  if (send) {
+    console.log('SEND EMAILS (to do)');
+    return;
+  }
+
+  if (preview) {
+    console.log(`previewing first email of ${emails.length}`);
+    previewEmail(emails[0])
+      .then(console.log)
+      .catch(console.error);
   }
 }
 
-module.exports = getCanvasStudentsFromJex;
+module.exports = sendCanvasOrientationEmails;
