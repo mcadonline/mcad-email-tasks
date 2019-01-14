@@ -6,7 +6,8 @@
   "scripts": {
     "test:watch": "jest --watch",
     "test": "jest",
-    "start": "nodemon ./index.js --watch . --ext 'js,json,hbs,css,sql'"
+    "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql' -- canvas-orientation --preview --today 2019-01-15",
+    "start": "./cli.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "nodemon": "^1.18.9",
     "postmark": "^2.2.4",
     "preview-email": "0.0.10",
-    "react": "^16.7.0"
+    "react": "^16.7.0",
+    "write": "^1.0.3"
   }
 }

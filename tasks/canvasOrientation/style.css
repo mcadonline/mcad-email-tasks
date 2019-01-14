@@ -38,28 +38,31 @@ td {
   width: 570px;
   margin: 0 auto;
   padding: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
   background-color: #ffffff;
 }
 
 .mcad-frame {
-  background-image: linear-gradient(90deg, #feff00 0%, #a3ff00 100%);
-  color: black;
-  padding: 0.75rem;
+  color: #2f3133;
+  padding: 1.5rem;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1;
+  border-bottom: 1px solid #2f3133;
+  margin: 0.5rem auto 2rem;
 }
 
 .mcad-frame .logo {
-  max-height: 0.75rem;
+  max-height: 1.5rem;
   display: inline-block;
   margin: 0 0.25rem;
 }
 
 .mcad-frame a {
-  color: black;
+  color: #2f3133;
   text-decoration: none;
 }
 
@@ -72,6 +75,7 @@ main {
   background: #eee;
   padding: 1rem;
   margin: 1rem;
+  border-radius: 3px;
 }
 .info-box p {
   margin: 0;
@@ -108,44 +112,27 @@ main {
 }
 
 h1 {
-  margin-top: 0;
   color: #2f3133;
-  font-size: 19px;
+  font-size: 1.25rem;
   font-weight: bold;
   text-align: left;
 }
 
 h2 {
-  margin-top: 0;
   color: #2f3133;
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: bold;
   text-align: left;
+  border-bottom: 1px solid #ccc;
 }
 
-.key-value-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  margin: 0;
-}
-.key-value-list dt {
-  width: 25%;
-  min-width: 6rem;
+.key-value .key {
   font-size: 0.75rem;
   text-transform: uppercase;
-  padding-right: 1rem;
 }
-.key-value-list dd {
-  width: 75%;
-  margin: 0;
-  padding: 0;
+.key-value .value {
   font-family: monospace;
   font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.key-value-list dd:last-of-type {
-  margin-bottom: 0;
 }
 
 .step-by-step tr > td:first-of-type {
