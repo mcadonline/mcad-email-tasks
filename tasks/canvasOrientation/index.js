@@ -3,8 +3,8 @@ const previewEmail = require('preview-email');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
 
-const createSQL = ({ mockTodayAs }) => {
-  const quotedDateOrGetDate = mockTodayAs ? `'${mockTodayAs}'` : 'getdate()';
+const createSQL = ({ today }) => {
+  const quotedDateOrGetDate = today ? `'${today}'` : 'getdate()';
   return `
 declare @today datetime;
 declare @tomorrow datetime;
@@ -79,9 +79,15 @@ const to = ({
 
 const from = () => 'MCAD Online Learning <online@mcad.edu>';
 
-async function sendCanvasOrientationEmails({ mockTodayAs, send, preview }) {
-  const sql = createSQL({ mockTodayAs });
+async function sendCanvasOrientationEmails({ today, send, preview }) {
+  const sql = createSQL({ today });
   const data = await jex.query(sql);
+
+  if (!data.length) {
+    console.log('No Emails to send today. Exiting.');
+    return;
+  }
+
   const emails = await generateEmails({
     template: path.basename(__dirname),
     data,

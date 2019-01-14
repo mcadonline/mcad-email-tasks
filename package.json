@@ -1,7 +1,7 @@
 {
-  "name": "huginn",
+  "name": "mcad-email-tasks",
   "version": "0.1.0",
-  "description": "Email Online Learning templates",
+  "description": "MCAD Email Tasks will generate and send emails",
   "main": "index.js",
   "scripts": {
     "test:watch": "jest --watch",
@@ -20,8 +20,10 @@
     "dotenv": "^6.2.0",
     "email-templates": "^5.0.3",
     "handlebars": "^4.0.12",
+    "inquirer": "^6.2.1",
     "lit-html": "^1.0.0-rc.2",
     "luxon": "^1.10.0",
+    "meow": "^5.0.0",
     "mssql": "^4.3.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
