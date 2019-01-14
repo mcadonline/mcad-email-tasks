@@ -7,17 +7,7 @@
 <body>
   <div class="container">
     <header class="mcad-frame">
-      MCAD <svg class="logo" width="18px" height="18px" viewBox="0 0 230 230" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <title>MCAD X</title>
-        <defs></defs>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Artboard" fill="#000">
-            <path d="M155.910363,135.2942 L230,209.383836 L209.7058,230 L135.616164,155.910363 L155.910363,135.2942 L155.910363,135.2942 Z M209.7058,8.52651283e-14 L230,20.2941999 L155.910363,94.3838364 L135.616164,74.0896365 L209.7058,8.52651283e-14 L209.7058,8.52651283e-14 Z M20.6161636,8.52651283e-14 L135.616164,115 L20.6161636,229.67827 L0.322196769,209.383836 L94.3838364,115 L0,20.2941999 L20.6161636,8.52651283e-14 L20.6161636,8.52651283e-14 Z"
-              id="MCAD_X_Logo"></path>
-          </g>
-        </g>
-      </svg> ONLINE LEARNING
+      MCAD &times; ONLINE LEARNING
     </header>
 
     <main>
@@ -25,7 +15,7 @@
 
       <p>Hello {{ firstName }},</p>
 
-      <p>This semester, you are in a course participating in a <b>pilot of Canvas LMS</b>:</p>
+      <p>This semester, you are in a course participating in a <b>pilot of Canvas</b>:</p>
 
       <div class="info-box course-info">
         <p><b>{{courseName}}</b> ({{term}} {{year}})</p>
@@ -51,19 +41,25 @@
         </p>
 
         <h2>Step 2</h2>
-        <p>Make sure you can login to Canvas LMS at <a href="https://canvas.mcad.edu">canvas.mcad.edu</a>.</p>
 
-        <p><a class="button" href="https://canvas.mcad.edu">Verify Canvas Login</a>
+        <p>Make sure you can login to Canvas LMS at <a href="https://canvas.mcad.edu">canvas.mcad.edu</a> using your
+          MCAD credentials.</p>
+
+        <p><a class="button" href="https://canvas.mcad.edu">Login to Canvas</a>
         </p>
 
+        <h2>Don't have a password yet?</h2>
+
         <p>
-          Your MCAD login credentials, you can set (or reset) at
-          <a href="https://password.mcad.edu/index.php?selfservice=forgotpw">https://password.mcad.edu/index.php?selfservice=forgotpw</a>,
+          You can set (or reset) your password
           with the following info:
         </p>
 
-
         <div class="info-box">
+          <p class="key-value">
+            <b class="key">Link</b>
+            <code><a href="https://password.mcad.edu/index.php?selfservice=forgotpw">Reset Password</a>
+          </p>
           <p class="key-value">
             <b class="key">Username</b>
             <code class="value">{{username}}</code>
@@ -88,8 +84,6 @@
           </p>
         </div>
 
-        <p>This is to give your instructor a chance to
-          update things for the semester.</p>
         <p>After your course opens, login to Canvas LMS at <a href="https://canvas.mcad.edu">canvas.mcad.edu</a>.</p>
 
         <h2>Questions? Need Help?</h2>
