@@ -94,10 +94,6 @@ async function main() {
 
     if (send) {
       log('✉️  Sending Emails\n');
-      if (emails.length !== 1) {
-        log('More than 1 email');
-        process.exit(1);
-      }
       await Promise.all(emails.map(sendEmail));
     }
 
