@@ -1,8 +1,6 @@
 const path = require('path');
-const previewEmail = require('preview-email');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
-const sendEmail = require('../../lib/sendEmail');
 const log = require('../../lib/log');
 
 const createSQL = ({ today }) => {
@@ -84,13 +82,13 @@ const to = ({
 
 const from = () => 'MCAD Online Learning <online@mcad.edu>';
 
-async function sendCanvasOrientationEmails({ today, send, preview }) {
+async function sendCanvasOrientationEmails({ today }) {
   const sql = createSQL({ today });
-  const data = (await jex.query(sql)).filter(x => x.username === 'jjohnson136');
+  const data = await jex.query(sql);
 
   if (!data.length) {
     log('No Emails to send today. Exiting.');
-    return;
+    return [];
   }
 
   const emails = await generateEmails({
@@ -101,26 +99,7 @@ async function sendCanvasOrientationEmails({ today, send, preview }) {
     bcc: from,
   });
 
-  log(emails.map(x => x.to).join('\n'));
-
-  if (send) {
-    // Limit to 1 email for testing
-    log('Limiting to 1 email for testing.');
-    if (emails.length !== 1) {
-      log('More than 1 email');
-      process.exit(1);
-    }
-    await Promise.all(emails.map(sendEmail));
-    log('Sending Emails');
-    return;
-  }
-
-  if (preview) {
-    log(`previewing first email of ${emails.length}`);
-    previewEmail(emails[0])
-      .then(log)
-      .catch(log);
-  }
+  return emails;
 }
 
 module.exports = sendCanvasOrientationEmails;
