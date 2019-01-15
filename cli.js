@@ -64,14 +64,19 @@ async function main() {
 
   const taskFn = validTasks[taskChoice];
   log(`Running Task: ${taskChoice}`);
-  log(`options: ${JSON.stringify(cli.flags)}`);
+  const prettyPrintOptions = opts => Object.keys(opts)
+    .reduce((acc, optKey) => [...acc, `${optKey.padStart(10)}: ${opts[optKey]}`], [])
+    .join('\n');
+
+  log('options');
+  log(prettyPrintOptions(cli.flags));
   try {
     await taskFn(cli.flags);
+    log('✅ Done!');
   } catch (error) {
+    log('❌ Error');
     log(error);
   }
-
-  const logContents = log('Task Completed');
 
   const timestamp = DateTime.local()
     .toISO()
@@ -80,8 +85,8 @@ async function main() {
 
   const filename = `${taskChoice}-${timestamp}.log`;
   const fileDest = path.join(__dirname, './tmp', filename);
-  await writeFile(fileDest, logContents.join('\n')).catch(console.error);
-  console.log(`\n👍  Output: ${fileDest}`);
+  log(`\n👍  Output: ${fileDest}`);
+  await writeFile(fileDest, log().join('\n')).catch(console.error);
 }
 
 // log unhandled rejections

@@ -6,7 +6,7 @@
   "scripts": {
     "test:watch": "jest --watch",
     "test": "jest",
-    "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql' -- canvas-orientation --preview --today 2019-01-15",
+    "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql' -- canvas-orientation --preview",
     "start": "./cli.js"
   },
   "author": "",

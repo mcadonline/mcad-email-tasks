@@ -35,7 +35,7 @@ td {
 }
 
 .container {
-  width: 570px;
+  max-width: 570px;
   margin: 0 auto;
   padding: 0;
   padding-left: 1rem;
@@ -43,16 +43,21 @@ td {
   background-color: #ffffff;
 }
 
+/* only for email first-line preview */
+.preheader {
+  display: none !important;
+}
+
 .mcad-frame {
   color: #2f3133;
-  padding: 1.25rem;
+  padding: 1.25rem 0;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1;
   border-bottom: 2px solid #2f3133;
-  margin: 0.5rem auto 2rem;
+  margin: 0.5rem auto 1rem;
 }
 
 .mcad-frame .logo {
@@ -75,7 +80,7 @@ main {
 .info-box {
   background: #eee;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem auto;
   border-radius: 3px;
 }
 .info-box p {

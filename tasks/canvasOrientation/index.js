@@ -6,7 +6,10 @@ const sendEmail = require('../../lib/sendEmail');
 const log = require('../../lib/log');
 
 const createSQL = ({ today }) => {
-  const quotedDateOrGetDate = today ? `'${today}'` : 'getdate()';
+  // use cast(getdate() as date) to get only the date
+  // otherwise getdate() will include time and the query
+  // won't work as expected
+  const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
   return `
 declare @today datetime;
 declare @tomorrow datetime;
@@ -95,6 +98,7 @@ async function sendCanvasOrientationEmails({ today, send, preview }) {
     data,
     to,
     from,
+    bcc: from,
   });
 
   log(emails.map(x => x.to).join('\n'));
