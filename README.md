@@ -64,5 +64,28 @@ Prerequisites:
 - Linux server supporting Cron
 
 ```sh
-$ 
+# ssh into server for deployment
+$ ssh james@ol-support.mcad.edu
+
+# clone the repo to ~/dev
+$ cd ~/dev
+$ git clone git@github.com:mcadonline/mcad-email-tasks.git
+
+# link the ./cli.js so that we can run mcad-email-tasks as
+# a command from the command line
+$ cd mcad-email-tasks
+$ npm link
+
+# setup a .env file
+# I like putting all .env files in a single ~/.env folder
+# and then linking to them in the git repos
+$ mkdir ~/.env/mcad-email-tasks
+$ cp ~/dev/mcad-email-tasks/.env.example ~/.env/mcad-email-tasks/.env.production
+$ ln -s ~/.env/mcad-email-tasks/.env.production ~/dev/mcad-email-tasks/.env
+
+# test
+$ mcad-email-tasks
+
+# setup cron to run mcad-email-tasks nightly at 6:30
+# TODO
 ```
