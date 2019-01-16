@@ -2,7 +2,9 @@
   "name": "mcad-email-tasks",
   "version": "0.1.0",
   "description": "MCAD Email Tasks will generate and send emails",
-  "main": "index.js",
+  "bin": {
+    "mcad-email-tasks": "./cli.js"
+  },
   "scripts": {
     "test:watch": "jest --watch",
     "test": "jest",
