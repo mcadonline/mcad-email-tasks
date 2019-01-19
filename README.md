@@ -36,17 +36,17 @@ Opens a preview of the email in the browser.
 
 Sends the email. The email will not be sent this option is included.
 
-## Email Tasks
+## Email Tasks (current and future)
 
-|     | Task Name                             | When?               | Audience              | Details                                                                                                                            |
-| --- | ------------------------------------- | ------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| ☑️  | `canvas-orientation`                  | 1 week before start | Canvas Pilot Students | How initialize MCAD credentials and use Canvas LMS.                                                                                |
-|     | `bb-orientation`                      | 1 week before start | OL Students           | How to initialize MCAD credentials and use Blackboard LMS                                                                          |
-|     | `canvas-course-open`                  | Sunday before start | Canvas Pilot Students | Course is open and available on Canvas LMS.                                                                                        |
-|     | `bb-course-open`                      | Sunday before start | OL Students           | Online course is open and available on Canvas                                                                                      |
-|     | `ol-1000-course-open`                 | Sunday before start | OL MA Programs        | Info on starting the OL-1000 Online Programs Orientation course. The OL Programs orientation is 1 week before the semester begins. |
-|     | `ce-papercut`                         | 4 days before start | CE Students           | Info on setting up Papercut account.                                                                                               |
-|     | `ol-course-registration-confirmation` | Upon registration   | OL Students           | Confirmation that they are registered for an online course                                                                         |
+| Done? | Task Name                             | When?               | Audience              | Details                                                                                                                            |
+| ----- | ------------------------------------- | ------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| ☑️    | `canvas-orientation`                  | 1 week before start | Canvas Pilot Students | How initialize MCAD credentials and use Canvas LMS.                                                                                |
+|       | `bb-orientation`                      | 1 week before start | OL Students           | How to initialize MCAD credentials and use Blackboard LMS                                                                          |
+|       | `canvas-course-open`                  | Sunday before start | Canvas Pilot Students | Course is open and available on Canvas LMS.                                                                                        |
+|       | `bb-course-open`                      | Sunday before start | OL Students           | Online course is open and available on Canvas                                                                                      |
+|       | `ol-1000-course-open`                 | Sunday before start | OL MA Programs        | Info on starting the OL-1000 Online Programs Orientation course. The OL Programs orientation is 1 week before the semester begins. |
+|       | `ce-papercut`                         | 4 days before start | CE Students           | Info on setting up Papercut account.                                                                                               |
+|       | `ol-course-registration-confirmation` | Upon registration   | OL Students           | Confirmation that they are registered for an online course                                                                         |
 
 ## Overview of Tasks folder
 

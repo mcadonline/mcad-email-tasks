@@ -16,4 +16,8 @@ module.exports = {
     dn: process.env.ldap_dn,
     password: process.env.ldap_password,
   },
+  log: {
+    to: process.env.log_to,
+    from: process.env.log_from,
+  },
 };

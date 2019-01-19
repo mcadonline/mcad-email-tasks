@@ -4,6 +4,7 @@ const path = require('path');
 const meow = require('meow');
 const { DateTime } = require('luxon');
 const previewEmail = require('preview-email');
+const settings = require('./settings');
 const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
@@ -16,7 +17,6 @@ const validTasks = {
 
 // Helper Functions
 const isValidTask = t => !!validTasks[t];
-const prettyPrintOptions = opts => JSON.stringify(opts, ' ', 2);
 const stripNewlines = str => str.replace(/\n/g, '');
 
 const emailToString = ({
@@ -48,6 +48,8 @@ async function main() {
         opens a preview of the email
     --send
         sends the email
+    --email-log <email@address.com>
+        sends the log to email address
     --help
         print this usage guide
   
@@ -58,7 +60,6 @@ async function main() {
       flags: {
         today: {
           type: 'string',
-          alias: 't',
           default: null,
         },
         preview: {
@@ -69,12 +70,16 @@ async function main() {
           type: 'boolean',
           default: false,
         },
+        emailLog: {
+          type: 'string',
+          default: false,
+        },
       },
     },
   );
 
   const taskChoice = cli.input[0];
-  const { send, preview } = cli.flags;
+  const { send, preview, emailLog } = cli.flags;
 
   // show help if not a valid task name
   if (!isValidTask(taskChoice)) {
@@ -84,9 +89,9 @@ async function main() {
 
   try {
     // run task if it is a valid task name
-    log(`> Running Task: ${taskChoice}`);
-    log('> with options:');
-    log(prettyPrintOptions(cli.flags));
+    log(`> [${DateTime.local().toString()}]`);
+    log(`> Task: ${taskChoice}`);
+    log(`> options: ${JSON.stringify(cli.flags)}`);
     log('\n');
 
     const taskFn = validTasks[taskChoice];
@@ -103,11 +108,29 @@ async function main() {
         .then(log)
         .catch(log);
     }
+
     emails.map(x => log(`${emailToString(x)}\n`));
     log('✅  Done!');
+    if (emailLog) {
+      // email send log
+      sendEmail({
+        to: emailLog,
+        from: settings.log.from,
+        subject: `[${taskChoice}] ${emails.length} sent`,
+        text: log().join('\n'),
+      });
+    }
   } catch (error) {
     log('❌  Error');
     log(error);
+    if (emailLog) {
+      sendEmail({
+        to: emailLog,
+        from: settings.log.from,
+        subject: `[${taskChoice}] ❌ Error`,
+        text: log().join('\n'),
+      });
+    }
   }
 
   const timestamp = DateTime.local()
@@ -119,6 +142,8 @@ async function main() {
   const fileDest = path.join(__dirname, './tmp', filename);
   log(`\n👍  Output: ${fileDest}`);
   await writeFile(fileDest, log().join('\n')).catch(console.error);
+
+  return true;
 }
 
 // log unhandled rejections
