@@ -17,6 +17,10 @@ const validTasks = {
   'ol-course-reg-confirm': olCourseRegConfirm,
 };
 
+const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
+  .map(t => `\n\t    ${t}`)
+  .join(' ');
+
 // Helper Functions
 const isValidTask = t => !!validTasks[t];
 const stripNewlines = str => str.replace(/\n/g, '');
@@ -40,8 +44,7 @@ async function main() {
   Usage
     $ mcad-email-tasks <email-name> <options>
 
-  Emails
-    ${Object.keys(validTasks).join('\n')}
+  Email Names ${stringifyTasks()}
   
   Options
     --today <ISO Date>     
