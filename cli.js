@@ -9,10 +9,12 @@ const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
 const canvasOrientation = require('./tasks/canvasOrientation');
+const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 
 // Tasks
 const validTasks = {
   'canvas-orientation': canvasOrientation,
+  'ol-course-reg-confirm': olCourseRegConfirm,
 };
 
 // Helper Functions

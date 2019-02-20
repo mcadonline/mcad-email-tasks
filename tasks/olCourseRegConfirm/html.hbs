@@ -1,0 +1,73 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css" data-inline="data-inline">
+</head>
+
+<body>
+  <p class="preheader">
+    {{courseName}} ({{term}} {{year}}) • {{startDate}} – {{endDate}}
+  </p>
+  <div class="container">
+    <header class="mcad-frame">
+      MCAD <img class="logo" src="https://canvas.mcad.edu/img/MCAD_X_logo.png" alt="X" width="16" height="16" />
+      ONLINE
+      LEARNING
+    </header>
+
+    <main>
+      <header class="email-header">
+        <div class="header-image">👍</div>
+        <h1>You&rsquo;re Registered!</h1>
+      </header>
+
+      <p>Hello {{ firstName }},</p>
+
+      <p>You&rsquo;re registered for the following online course:</p>
+
+      <div class="info-box course-info">
+        <p><b>{{courseName}} ({{term}} {{year}})</b></p>
+        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{startDate}} – {{endDate}}</p>
+      </div>
+
+      <h2>What&rsquo;s Next?</h2>
+
+      <ol>
+        <li>
+          <p>
+            The week before your course begins, you will be emailed information about how to login and prepare for your
+            online course. Keep your student ID number handy, as you will need it to set or reset your password: <div
+              class="info-box">
+              <p class="key-value">
+                <b class="key">Student ID#</b>
+                <code class="value">{{id}}</code>
+              </p>
+            </div>
+        </li>
+
+        <li>
+          <p>You will not be able to access your online course until after your course open date:</p>
+          <div class="info-box">
+            <p class="key-value">
+              <b class="key">Course Opens</b>
+              <code class="value">{{ openDate }}</code>
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <h2>Questions? Need Help?</h2>
+
+      <p>If you have any questions, don't hesitate to contact Online Learning. We're happy to help!
+      </p>
+      <div class="contact-info">
+        <p><a href="mailto:online@mcad.edu">online@mcad.edu</a></p>
+        <p><a href="tel:6128743618">612-874-3618</a></p>
+        <p><a href="tel:18008746233">1-800-874-MCAD (6233)</a> – press 4 for Online Learning</p>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>
