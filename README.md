@@ -38,9 +38,8 @@ Sends the email. The email will not be sent this option is included.
 
 ## Email Tasks (current and future)
 
-| Done? | Task Name | When? | Audience | Details |
-| ----- | --------- | ----- | -------- | ------- |
-
+| Done? | Task Name             | When?               | Audience              | Details                                                                                                                            |
+| ----- | --------------------- | ------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | ☑️    | `ol-reg-confirm`      | Upon registration   | OL Students           | Confirmation that they are registered for an online course                                                                         |
 | ☑️    | `canvas-orientation`  | 1 week before start | Canvas Pilot Students | How initialize MCAD credentials and use Canvas LMS.                                                                                |
 |       | `bb-orientation`      | 1 week before start | OL Students           | How to initialize MCAD credentials and use Blackboard LMS                                                                          |
