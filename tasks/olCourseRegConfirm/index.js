@@ -68,7 +68,7 @@ const to = ({
 
 const from = () => 'MCAD Online Learning <online@mcad.edu>';
 
-async function sendCanvasOrientationEmails({ today }) {
+async function sendEmails({ today }) {
   const sql = createSQL({ today });
   const data = await jex.query(sql);
 
@@ -88,4 +88,4 @@ async function sendCanvasOrientationEmails({ today }) {
   return emails;
 }
 
-module.exports = sendCanvasOrientationEmails;
+module.exports = sendEmails;
