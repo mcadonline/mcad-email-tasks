@@ -9,12 +9,14 @@ const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
 const canvasOrientation = require('./tasks/canvasOrientation');
+const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 
 // Tasks
 const validTasks = {
   'canvas-orientation': canvasOrientation,
   'ol-course-reg-confirm': olCourseRegConfirm,
+  'bb-orientation': bbOrientation,
 };
 
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)

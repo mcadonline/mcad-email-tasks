@@ -1,0 +1,107 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css" data-inline="data-inline">
+</head>
+
+<body>
+  <p class="preheader">
+    Please complete the following before your first day of class:
+  </p>
+  <div class="container">
+    <header class="mcad-frame">
+      MCAD <img class="logo" src="https://canvas.mcad.edu/img/MCAD_X_logo.png" alt="X" width="16" height="16" />
+      ONLINE
+      LEARNING
+    </header>
+
+    <main>
+      <header class="email-header">
+        <div class="header-image">🤩</div>
+        <h1><strong>Get Ready</strong> for Your Online Course</h1>
+      </header>
+
+      <p>Hello {{ firstName }},</p>
+
+      <p>The start of your online course is right around the corner:</p>
+
+      <div class="info-box course-info">
+        <p><b>{{courseName}} ({{term}} {{year}})</b></p>
+        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{startDate}} – {{endDate}}</p>
+      </div>
+
+      <p>To prepare, please complete the following before your first day of class.</p>
+
+      <h2>Step 1</h2>
+
+      <p>Before your first day <a href="https://learn.mcad.edu/orientation">complete the Blackboard Orientation</a>
+      </p>
+
+      <p><a class="button" href="https://learn.mcad.edu/orientation">Begin Blackboard Orientation</a>
+      </p>
+
+      <p>
+        You'll learn how to login to Blackboard, what a typical online course looks like,
+        where you can get books and supplies, and more.
+      </p>
+
+      <h2>Step 2</h2>
+
+      <p>Make sure you can login to Blackboard at <a href="https://learn.mcad.edu">learn.mcad.edu</a> using your
+        MCAD credentials.</p>
+
+      <p><a class="button" href="https://learn.mcad.edu">Login to Blackboard</a>
+      </p>
+
+      <h2>Don't have a password yet?</h2>
+
+      <p>
+        You can set (or reset) your password
+        with the following info:
+      </p>
+
+      <div class="info-box">
+        <p class="key-value">
+          <b class="key">Link</b>
+          <code><a href="https://password.mcad.edu/index.php?selfservice=forgotpw">Reset Password</a>
+          </p>
+          <p class="key-value">
+            <b class="key">Username</b>
+            <code class="value">{{username}}</code>
+        </p>
+        <p class="key-value">
+          <b class="key">Student ID#</b>
+          <code class="value">{{id}}</code>
+        </p>
+      </div>
+
+      <p>If you cannot login, please email <a href="mailto:online@mcad.edu">online@mcad.edu</a> for assistance.</p>
+
+      <h2>
+        Can't See Your Course? Don't Worry!
+      </h2>
+      <p>Your course will not be available until after your course open date:</p>
+
+      <div class="info-box">
+        <p class="key-value">
+          <b class="key">Course Opens</b>
+          <code class="value">{{ openDate }}</code>
+        </p>
+      </div>
+
+      <p>After your course opens, login to Blackboard at <a href="https://learn.mcad.edu">learn.mcad.edu</a>.</p>
+
+      <h2>Questions? Need Help?</h2>
+      <p>Contact MCAD Online Learning</p>
+      <div class="contact-info">
+        <p><a href="mailto:online@mcad.edu">online@mcad.edu</a></p>
+        <p><a href="tel:6128743618">612-874-3618</a></p>
+        <p><a href="tel:18008746233">1-800-874-MCAD (6233)</a> – press 4 for Online Learning</p>
+      </div>
+      <p>Have a great semester!</p>
+    </main>
+  </div>
+</body>
+
+</html>
