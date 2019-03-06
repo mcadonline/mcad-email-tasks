@@ -62,7 +62,7 @@ where ss.room_cde = 'OL'
   and (
     sch.crs_cde not in (
       'SD   6750 20', -- Creative Leadership, A. Nowak
-      'GWD  7460 20', -- UX Desieng, M.Luken
+      'GWD  7460 20', -- UX Design, M.Luken
       'HS   5010 20', -- LA Adv Seminar, D. Pankonien
       '2D   3206 20' -- Illustrating Ideas, A. Mitchell
     )
