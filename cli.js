@@ -13,6 +13,7 @@ const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 const bbCourseOpen = require('./tasks/bbCourseOpen');
 const canvasCourseOpen = require('./tasks/canvasCourseOpen');
+const cePapercut = require('./tasks/cePapercut');
 
 // Tasks
 const validTasks = {
@@ -21,6 +22,7 @@ const validTasks = {
   'bb-course-open': bbCourseOpen,
   'canvas-orientation': canvasOrientation,
   'canvas-course-open': canvasCourseOpen,
+  'ce-papercut': cePapercut,
 };
 
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
