@@ -11,10 +11,8 @@ const createSQL = ({ today }) => {
   return `
 declare @today datetime;
 declare @tomorrow datetime;
-declare @weekfromnow  datetime;
 set @today = ${quotedDateOrGetDate}
 set @tomorrow = dateadd(day,1,@today);
-set @weekfromnow = dateadd(day, cast(7 as int), @today);
 
 select distinct nm.id_num as id
   , rtrim(nm.first_name) as firstName
@@ -35,6 +33,7 @@ select distinct nm.id_num as id
   , ss.begin_dte as startDate
   , ss.end_dte as endDate
   , sch.add_dte as createdAt
+  , DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte) as sundayBeforeStart
 from student_crs_hist sch
 inner join name_master nm
     on sch.id_num = nm.id_num
@@ -55,7 +54,7 @@ where ss.room_cde = 'OL'
   and sch.crs_cde not like 'GD   6411 %'
   and sch.crs_cde not like 'GD   6413 %'
   and sch.crs_cde not like 'GD   6511 %'
-  -- current or preregistered students
+  -- current, preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
   and transaction_sts in ('C','P')
@@ -66,13 +65,13 @@ where ss.room_cde = 'OL'
     and sch.yr_cde = '2018'
   )
   and ( 
-    -- course begins in a week
-    ss.begin_dte = @weekfromnow
-    -- handle late adds.
-    -- course begins in less than a week
-    -- and their add_dte is EXACTLY today
+    -- today is the sunday before the start date
+    @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
+    -- handle any late adds
+    --   i.e., if today is after the sunday before start
+    --   and their add_dte is EXACTLY today
       or (
-        ss.begin_dte < @weekfromnow
+        @today > DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
         and sch.add_dte > @today
         and sch.add_dte < @tomorrow
       )

@@ -8,7 +8,7 @@
   "scripts": {
     "test:watch": "jest --watch",
     "test": "jest",
-    "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql' -- bb-orientation --preview --today 2019-02-18",
+    "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql'",
     "start": "./cli.js"
   },
   "author": "",

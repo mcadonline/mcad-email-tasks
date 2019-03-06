@@ -11,12 +11,14 @@ const sendEmail = require('./lib/sendEmail');
 const canvasOrientation = require('./tasks/canvasOrientation');
 const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
+const bbCourseOpen = require('./tasks/bbCourseOpen');
 
 // Tasks
 const validTasks = {
   'canvas-orientation': canvasOrientation,
   'ol-course-reg-confirm': olCourseRegConfirm,
   'bb-orientation': bbOrientation,
+  'bb-course-open': bbCourseOpen,
 };
 
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
