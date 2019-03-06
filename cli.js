@@ -12,13 +12,15 @@ const canvasOrientation = require('./tasks/canvasOrientation');
 const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 const bbCourseOpen = require('./tasks/bbCourseOpen');
+const canvasCourseOpen = require('./tasks/canvasCourseOpen');
 
 // Tasks
 const validTasks = {
-  'canvas-orientation': canvasOrientation,
   'ol-course-reg-confirm': olCourseRegConfirm,
   'bb-orientation': bbOrientation,
   'bb-course-open': bbCourseOpen,
+  'canvas-orientation': canvasOrientation,
+  'canvas-course-open': canvasCourseOpen,
 };
 
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
@@ -109,6 +111,8 @@ async function main() {
     if (send) {
       log('✉️  Sending Emails\n');
       await Promise.all(emails.map(sendEmail));
+    } else {
+      log('🤔 Only generating emails, but not sending.');
     }
 
     if (preview && emails[0]) {
