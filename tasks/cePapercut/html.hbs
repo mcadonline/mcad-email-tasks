@@ -1,0 +1,111 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css" data-inline="data-inline">
+</head>
+
+<body>
+  <p class="preheader">
+    This class requires you to setup an MCAD account to access printing services. Please complete the following
+    steps before your first day of class.
+  </p>
+  <div class="container">
+    <header class="mcad-frame">
+      MCAD <img class="logo" src="https://canvas.mcad.edu/img/MCAD_X_logo.png" alt="X" width="16" height="16" />
+      CONTINUING EDUCATION
+    </header>
+
+    <main>
+      <header class="email-header">
+        <div class="header-image">🎒</div>
+        <h1><strong>Get Ready!</strong> Your CE Course Starts Soon</h1>
+      </header>
+
+      <p>Hello {{ firstName }},</p>
+
+      <p>Your MCAD Continuing Education class begins soon:</p>
+
+      <div class="info-box course-info">
+        <p><b>{{courseName}} ({{term}} {{year}})</b></p>
+        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{startDate}} – {{endDate}}</p>
+      </div>
+
+      <p>
+        This class requires you to setup an MCAD account to access printing services. Please complete the following
+        steps before your first day of class.
+      </p>
+
+      <h2>STEP 1: SETUP YOUR MCAD ACCOUNT</h2>
+
+      <p>
+        Please setup your MCAD account using the link and
+        information below:
+      </p>
+
+      <div class="info-box">
+        <p class="key-value">
+          <p class="key-value">
+            <b class="key">Username</b>
+            <code class="value">{{username}}</code>
+          </p>
+          <p class="key-value">
+            <b class="key">Student ID#</b>
+            <code class="value">{{id}}</code>
+          </p>
+      </div>
+
+      <p><a class="button" href="https://password.mcad.edu/index.php?selfservice=forgotpw">Setup MCAD Account</a>
+      </p>
+
+      <p>Please save your new login information for future use during the semester.</p>
+
+
+      <h2>STEP 2: LEARN ABOUT PRINTING VIA PAPERCUT</h2>
+
+      <p>Printing at the <a href="https://intranet.mcad.edu/department/service-bureau">MCAD Service Bureau</a> is
+        managed through PaperCut, an online print payment system. Only students in approved classes, such as yours, may
+        access this system and utilize the MCAD Service Bureau.</p>
+
+      <p>
+        Please review important information about accessing and using your PaperCut account <strong>before your class
+          begins</strong>:
+      </p>
+
+      <p>
+        <a class="button"
+          href="https://docs.google.com/document/d/1gz8wbiEzjCUPT-1aC39ZxEDDQLjNGr4DNDXMhkOHKcI/edit">Read about your
+          PaperCut Account</a>
+      </p>
+
+
+      <h3>Important Notes</h3>
+
+      <ul>
+        <li>
+          MCAD login will be valid only for the dates during which you are enrolled in your Continuing Education
+          class.
+        </li>
+        <li>
+          After this point, you will be unable to access or use your Papercut account or the MCAD Service
+          Bureau, and your corresponding Papercut account will be cleared of its value.
+        </li>
+        <li>
+          There will be <strong>no refunds for any remaining funds in the account once the course has ended.</strong>
+          Please keep this in mind when planning
+          your anticipating your spending during the semester.
+        </li>
+      </ul>
+
+      <h2>Questions? Need Help?</h2>
+      <p>Contact MCAD Continuing Education</p>
+      <div class="contact-info">
+        <p><a href="mailto:continuing_education@mcad.edu">continuing_education@mcad.edu</a></p>
+        <p><a href="tel:6128743765">612-874-3765</a></p>
+      </div>
+      <p>We hope you enjoy your semester with us. Thank you for joining this community.</p>
+    </main>
+  </div>
+</body>
+
+</html>
