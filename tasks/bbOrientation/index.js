@@ -61,7 +61,12 @@ where ss.room_cde = 'OL'
   and transaction_sts in ('C','P')
   -- ignore canvas courses
   and (
-    sch.crs_cde not in ('SD   6750 20', 'GWD  7460 20', 'HS   5010 20')
+    sch.crs_cde not in (
+      'SD   6750 20', -- Creative Leadership, A. Nowak
+      'GWD  7460 20', -- UX Desieng, M.Luken
+      'HS   5010 20', -- LA Adv Seminar, D. Pankonien
+      '2D   3206 20' -- Illustrating Ideas, A. Mitchell
+    )
     and sch.trm_cde = 'SP'
     and sch.yr_cde = '2018'
   )
