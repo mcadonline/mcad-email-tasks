@@ -125,7 +125,9 @@ async function main() {
       sendEmail({
         to: emailLog,
         from: settings.log.from,
-        subject: `[${taskChoice}] ${emails.length} sent`,
+        subject: `[${taskChoice}] ${emails.length} emails ${
+          send ? 'sent' : 'generated, but not sent'
+        }`,
         text: log().join('\n'),
       });
     }
