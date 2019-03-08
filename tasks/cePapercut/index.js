@@ -98,7 +98,7 @@ async function sendEmails({ today }) {
       ${firstName} ${lastName} <${mcadEmail}>
     `,
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
-    bcc: () => 'MCAD Continuing Education <continuing_education@mcad.edu>, ***REMOVED***',
+    bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
   });
 
   return emails;
