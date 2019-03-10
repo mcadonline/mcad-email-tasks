@@ -110,14 +110,20 @@ async function main() {
     const taskFn = validTasks[taskChoice];
     const emails = await taskFn(cli.flags);
 
-    if (send) {
-      log('✉️  Sending Emails\n');
-      await Promise.all(emails.map(sendEmail));
-    } else {
-      log('🤔 Only generating emails, but not sending.');
+    if (!emails.length) {
+      log('0️⃣  No emails to send today.');
     }
 
-    if (preview && emails[0]) {
+    if (emails.length && send) {
+      await Promise.all(emails.map(sendEmail));
+      log(`📤  Sending ${emails.length} emails.`);
+    }
+
+    if (emails.length && !send) {
+      log('🤔  Only generating emails, but not sending.');
+    }
+
+    if (emails.length && preview) {
       log(`👁  previewing email 1 of ${emails.length}. Opening browser...\n`);
       previewEmail(emails[0])
         .then(log)
