@@ -89,10 +89,7 @@ async function sendEmails({ today }) {
   const sql = createSQL({ today });
   const data = await jex.query(sql);
 
-  if (!data.length) {
-    log('No Emails to send today. Exiting.');
-    return [];
-  }
+  if (!data.length) return [];
 
   const emails = await generateEmails({
     template: path.basename(__dirname),
