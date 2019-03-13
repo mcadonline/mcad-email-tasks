@@ -110,6 +110,8 @@ async function main() {
     const taskFn = validTasks[taskChoice];
     const emails = await taskFn(cli.flags);
 
+    console.warn(`Listing Emails: ${JSON.stringify(emails, ' ', 2)}`);
+
     if (!emails.length) {
       log('0️⃣  No emails to send today.');
     }
@@ -130,7 +132,7 @@ async function main() {
         .catch(log);
     }
 
-    emails.map(x => log(`${emailToString(x)}\n`));
+    emails.forEach(x => log(`${emailToString(x)}\n`));
     log('✅  Done!');
     if (emailLog) {
       // email send log
