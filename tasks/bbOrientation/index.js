@@ -1,7 +1,6 @@
 const path = require('path');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
-const log = require('../../lib/log');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
