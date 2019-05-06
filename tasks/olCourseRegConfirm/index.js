@@ -70,10 +70,10 @@ async function sendEmails({ today }) {
     data,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
-    }) => `
-      ${firstName} ${lastName} <${personalEmail}>, 
-      ${firstName} ${lastName} <${mcadEmail}>
-    `,
+    }) => [
+      personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
+      mcadEmail ? `${firstName} ${lastName} <${mcadEmail}>` : '',
+    ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, emailtosalesforce@x-4drjafbeyv5ocogfxbtq319tk.in.salesforce.com',
   });
