@@ -1,14 +1,14 @@
 const path = require('path');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
-const log = require('../../lib/log');
+const withOnlyCanvasCoursesSql = require('../../lib/withOnlyCanvasCoursesSql');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
-  return `
+  const baseQuery = `
 declare @today datetime;
 declare @tomorrow datetime;
 declare @weekfromnow  datetime;
@@ -49,28 +49,23 @@ inner join section_schedules ss
     and ss.trm_cde = sch.trm_cde
     and ss.yr_cde = sch.yr_cde
 -- only canvas pilot courses
-where sch.crs_cde in (
-  'SD   6750 20', -- Creative Leadership, Anita Nowak (and Denise DeLuca)
-  'GWD  7460 20', -- UX Design, Matthew Luken
-  'HS   5010 20', -- LA Adv Seminar, Dawn Pankonien
-  '2D   3206 20', -- Illustrating Ideas, Alex Mitchell
-  'ILL  2000 01', -- Intro to Illustration, Jaime Anderson
-  'GRD  5100 01', -- Senior Project: Graphic Design, Jancourt
-  'AH   2103 01' -- Applied Arts and Designed Objects, GGG
-)
-  and sch.trm_cde = 'SP'
-  and sch.yr_cde = '2018'
-  and sch.waitlist_flag is null
+where 
+  -- dont include waitlisted
+  sch.waitlist_flag is null
   -- only include students with username
   and am_meml.addr_line_2 is not null
+  -- only students which begin within a week
+  -- or if it's less than one week, they've
+  -- been added in the last 24 hours
   and ( ss.begin_dte = @weekfromnow
     or (
       ss.begin_dte < @weekfromnow
         and sch.add_dte > @today
         and sch.add_dte < @tomorrow
     )
-  )
-  `;
+  )`;
+
+  return withOnlyCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
 };
 
 async function sendEmails({ today }) {

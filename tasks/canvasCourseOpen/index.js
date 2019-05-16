@@ -1,14 +1,14 @@
 const path = require('path');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
-const log = require('../../lib/log');
+const withOnlyCanvasCourseSql = require('../../lib/withOnlyCanvasCoursesSql');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
-  return `
+  const baseQuery = `
 declare @today datetime;
 declare @tomorrow datetime;
 set @today = ${quotedDateOrGetDate}
@@ -58,17 +58,6 @@ where ss.room_cde = 'OL'
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
   and transaction_sts in ('C','P')
-  -- only include canvas courses
-  and (
-    sch.crs_cde in (
-      'SD   6750 20', -- Creative Leadership, A. Nowak
-      'GWD  7460 20', -- UX Design, M.Luken
-      'HS   5010 20', -- LA Adv Seminar, D. Pankonien
-      '2D   3206 20' -- Illustrating Ideas, A. Mitchell
-    )
-    and sch.trm_cde = 'SP'
-    and sch.yr_cde = '2018'
-  )
   and ( 
     -- today is the sunday before the start date
     @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
@@ -82,6 +71,7 @@ where ss.room_cde = 'OL'
       )
   )
   `;
+  return withOnlyCanvasCourseSql(baseQuery, { sectionTable: 'sch' });
 };
 
 async function sendEmails({ today }) {
