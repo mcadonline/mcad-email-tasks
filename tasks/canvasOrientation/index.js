@@ -1,5 +1,7 @@
 const path = require('path');
+const R = require('ramda');
 const jex = require('../../services/jex');
+const log = require('../../lib/log');
 const generateEmails = require('../../lib/generateEmails');
 const withOnlyCanvasCoursesSql = require('../../lib/withOnlyCanvasCoursesSql');
 
@@ -70,13 +72,13 @@ where
 
 async function sendEmails({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql);
+  const records = await jex.query(sql);
 
-  if (!data.length) return [];
+  if (!records.length) return [];
 
   const emails = await generateEmails({
     template: path.basename(__dirname),
-    data,
+    data: records,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
     }) => `
@@ -85,6 +87,7 @@ async function sendEmails({ today }) {
     `,
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    requiredFields: ['username', 'personalEmail'],
   });
 
   return emails;

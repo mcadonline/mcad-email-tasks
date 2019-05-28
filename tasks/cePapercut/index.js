@@ -95,6 +95,7 @@ async function sendEmails({ today }) {
     `,
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    requiredFields: ['username', 'personalEmail'],
   });
 
   return emails;

@@ -108,11 +108,13 @@ async function main() {
     log('\n');
 
     const taskFn = validTasks[taskChoice];
+
+    // TODO: Return both emails and errors object
+    // for invalid records. Then the errors object
+    // can be used for logging and generating subject lines.
     const emails = await taskFn(cli.flags);
 
     log(`Generated ${emails.length} emails\n`);
-
-    // console.warn(`Listing Emails: ${JSON.stringify(emails, ' ', 2)}`);
 
     if (!emails.length) {
       log('0️⃣  No emails to send today.');
