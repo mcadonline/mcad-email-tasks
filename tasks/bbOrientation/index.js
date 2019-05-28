@@ -80,13 +80,13 @@ where ss.room_cde = 'OL'
 
 async function sendEmails({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql);
+  const records = await jex.query(sql);
 
-  if (!data.length) return [];
+  if (!records.length) return [];
 
   const emails = await generateEmails({
     template: path.basename(__dirname),
-    data,
+    data: records,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
     }) => `
@@ -95,6 +95,7 @@ async function sendEmails({ today }) {
     `,
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, emailtosalesforce@x-4drjafbeyv5ocogfxbtq319tk.in.salesforce.com',
+    requiredFields: ['username', 'personalEmail'],
   });
 
   return emails;

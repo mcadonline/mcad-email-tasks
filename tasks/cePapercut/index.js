@@ -95,6 +95,7 @@ async function sendEmails({ today }) {
     `,
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, emailtosalesforce@x-4drjafbeyv5ocogfxbtq319tk.in.salesforce.com',
+    requiredFields: ['username', 'personalEmail'],
   });
 
   return emails;
