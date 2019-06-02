@@ -117,8 +117,8 @@ async function main() {
 
     // Handle output depending on options
     if (emails.length && send) {
-      console.log('sending emails...');
-      // await Promise.all(emails.map(sendEmail));
+      console.log(`sending ${emails.length} emails...`);
+      await Promise.all(emails.map(sendEmail));
     }
 
     if (emails.length && preview) {
