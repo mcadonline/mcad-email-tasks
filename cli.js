@@ -8,6 +8,7 @@ const settings = require('./settings');
 const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
+const createTaskReport = require('./lib/createTaskReport');
 const canvasOrientation = require('./tasks/canvasOrientation');
 const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
@@ -24,27 +25,20 @@ const validTasks = {
   'canvas-course-open': canvasCourseOpen,
   'ce-papercut': cePapercut,
 };
-
+const isValidTask = t => !!validTasks[t];
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
   .map(t => `\n\t    ${t}`)
   .join(' ');
 
-// Helper Functions
-const isValidTask = t => !!validTasks[t];
-const stripNewlines = str => str.replace(/\n/g, '');
-
-const emailToString = ({
-  to, from, bcc, subject, html, text,
+const createLogSubject = ({
+  emails, errors, opts, taskName,
 }) => [
-  `${'to:'.padEnd(8)} ${to}`,
-  `${'from:'.padEnd(8)} ${from}`,
-  `${'bcc:'.padEnd(8)} ${bcc}`,
-  `${'subject:'.padEnd(8)} ${subject}`,
-  `${'html:'.padEnd(8)} ${html.substring(0, 320)}...`,
-  `${'text:'.padEnd(8)} ${text.substring(0, 320)}...`,
-]
-  .map(stripNewlines)
-  .join('\n');
+  `[${taskName}]`,
+  errors.length ? `❌  ${errors.length} errors.` : '',
+  emails.length ? `✉️  ${emails.length} emails.` : 'No emails.',
+  emails.length && opts.send ? 'Sending.' : '',
+  emails.length && !opts.send ? 'Generated, NOT sent.' : '',
+].join(' ');
 
 async function main() {
   const cli = meow(
@@ -94,6 +88,10 @@ async function main() {
   const taskChoice = cli.input[0];
   const { send, preview, emailLog } = cli.flags;
 
+  let emails;
+  let errors;
+  let taskReport;
+
   // show help if not a valid task name
   if (!isValidTask(taskChoice)) {
     log(`Sorry "${taskChoice}" is not a valid task`);
@@ -101,67 +99,51 @@ async function main() {
   }
 
   try {
-    // run task if it is a valid task name
-    log(`> [${DateTime.local().toString()}]`);
-    log(`> Task: ${taskChoice}`);
-    log(`> options: ${JSON.stringify(cli.flags)}`);
-    log('\n');
-
     const taskFn = validTasks[taskChoice];
 
-    // TODO: Return both emails and errors object
-    // for invalid records. Then the errors object
-    // can be used for logging and generating subject lines.
-    const emails = await taskFn(cli.flags);
+    // get the emails generated and any errors
+    // that occured during generation
+    ({ emails, errors } = await taskFn(cli.flags));
 
-    log(`Generated ${emails.length} emails\n`);
+    // create a report of how things went
+    taskReport = createTaskReport({
+      taskName: taskChoice,
+      emails,
+      errors,
+      opts: cli.flags,
+    });
 
-    if (!emails.length) {
-      log('0️⃣  No emails to send today.');
-    }
+    log(taskReport);
 
+    // Handle output depending on options
     if (emails.length && send) {
-      await Promise.all(emails.map(sendEmail));
-      log(`📤  Sending ${emails.length} emails.`);
-    }
-
-    if (emails.length && !send) {
-      log('🤔  Only generating emails, but not sending.');
+      console.log('sending emails...');
+      // await Promise.all(emails.map(sendEmail));
     }
 
     if (emails.length && preview) {
-      log(`👁  previewing email 1 of ${emails.length}. Opening browser...\n`);
       previewEmail(emails[0])
         .then(log)
         .catch(log);
     }
-
-    emails.forEach(x => log(`${emailToString(x)}\n`));
-    log(`Total: ${emails.length} emails\n`);
-
-    log('✅  Done!');
-    if (emailLog) {
-      // email send log
-      sendEmail({
-        to: emailLog,
-        from: settings.log.from,
-        subject: `[${taskChoice}] ${emails.length} emails ${
-          send ? 'sent' : 'generated, but not sent'
-        }`,
-        text: log().join('\n'),
-      });
-    }
   } catch (error) {
     log('❌  Error');
     log(error);
-    if (emailLog) {
-      sendEmail({
-        to: emailLog,
-        from: settings.log.from,
-        subject: `[${taskChoice}] ❌ Error`,
-        text: log().join('\n'),
-      });
-    }
+  }
+
+  if (emailLog) {
+    const subject = createLogSubject({
+      emails,
+      errors,
+      opts: cli.flags,
+      taskName: taskChoice,
+    });
+    sendEmail({
+      to: emailLog,
+      from: settings.log.from,
+      subject,
+      text: taskReport,
+    });
   }
 
   const timestamp = DateTime.local()
