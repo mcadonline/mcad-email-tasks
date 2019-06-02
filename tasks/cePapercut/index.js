@@ -89,10 +89,10 @@ async function sendEmails({ today }) {
     data,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
-    }) => `
-      ${firstName} ${lastName} <${personalEmail}>,
-      ${firstName} ${lastName} <${mcadEmail}>
-    `,
+    }) => [
+      `${firstName} ${lastName} <${personalEmail}>`,
+      `${firstName} ${lastName} <${mcadEmail}>`,
+    ].join(', '),
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
