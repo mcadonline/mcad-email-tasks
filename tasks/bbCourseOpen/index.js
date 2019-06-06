@@ -1,5 +1,6 @@
 const path = require('path');
 const jex = require('../../services/jex');
+const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
 const withoutCanvasCoursesSql = require('../../lib/withoutCanvasCoursesSql');
 
@@ -75,13 +76,13 @@ where ss.room_cde = 'OL'
   return withoutCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql);
+  const data = await jex.query(sql).map(cleanJexData);
 
   if (!data.length) return [];
 
-  const emails = await generateEmails({
+  return generateEmails({
     template: path.basename(__dirname),
     data,
     to: ({
@@ -94,8 +95,6 @@ async function sendEmails({ today }) {
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
   });
-
-  return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;

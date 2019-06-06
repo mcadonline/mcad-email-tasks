@@ -1,7 +1,7 @@
 const path = require('path');
 const jex = require('../../services/jex');
+const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
-const log = require('../../lib/log');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -59,13 +59,13 @@ where ss.room_cde = 'OL'
   `;
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql);
+  const data = await jex.query(sql).map(cleanJexData);
 
   if (!data.length) return [];
 
-  const emails = await generateEmails({
+  return generateEmails({
     template: path.basename(__dirname),
     data,
     to: ({
@@ -77,8 +77,6 @@ async function sendEmails({ today }) {
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
   });
-
-  return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;

@@ -1,7 +1,6 @@
 const path = require('path');
-const R = require('ramda');
 const jex = require('../../services/jex');
-const log = require('../../lib/log');
+const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
 const withOnlyCanvasCoursesSql = require('../../lib/withOnlyCanvasCoursesSql');
 
@@ -70,13 +69,13 @@ where
   return withOnlyCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
-  const records = await jex.query(sql);
+  const records = await jex.query(sql).map(cleanJexData);
 
   if (!records.length) return [];
 
-  const emails = await generateEmails({
+  return generateEmails({
     template: path.basename(__dirname),
     data: records,
     to: ({
@@ -89,8 +88,6 @@ async function sendEmails({ today }) {
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
   });
-
-  return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;
