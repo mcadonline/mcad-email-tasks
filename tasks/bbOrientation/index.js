@@ -81,7 +81,7 @@ where ss.room_cde = 'OL'
 
 async function task({ today }) {
   const sql = createSQL({ today });
-  const records = await jex.query(sql).map(cleanJexData);
+  const records = await jex.query(sql).then(cleanJexData);
 
   if (!records.length) return [];
 
