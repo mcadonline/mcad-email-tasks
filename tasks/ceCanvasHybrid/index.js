@@ -62,7 +62,7 @@ select distinct nm.id_num as id
      and sm.crs_cde not like 'SE %' --ignore PCSS courses
      and sm.crs_cde not like 'MCAD 0101 %' -- ignore MCADemy
      and ss.room_cde <> 'OL' -- ignore Online Learning courses
-     and transaction_sts in ('C','P','H') -- ignore waitlisted, dropped, or historical students (withdrawn, grade submitted)
+     and transaction_sts in ('C','P') -- ignore waitlisted, dropped, or historical students (withdrawn, grade submitted)
      and (
          -- course begins in X days
          ss.begin_dte = @xdaysfromnow
