@@ -59,7 +59,7 @@ where ss.room_cde = 'OL'
   -- current or preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
-  and transaction_sts in ('C','P')
+  and transaction_sts in ('C','P','H')
   -- ignore canvas courses
   and ( 
     -- course begins in a week
@@ -78,7 +78,7 @@ where ss.room_cde = 'OL'
   return withoutCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql);
 
@@ -101,4 +101,4 @@ async function sendEmails({ today }) {
   return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;

@@ -57,7 +57,7 @@ where ss.room_cde = 'OL'
   -- current, preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
-  and transaction_sts in ('C','P')
+  and transaction_sts in ('C','P','H')
   and ( 
     -- today is the sunday before the start date
     @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
@@ -75,7 +75,7 @@ where ss.room_cde = 'OL'
   return withoutCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
   const data = await jex.query(sql);
 
@@ -98,4 +98,4 @@ async function sendEmails({ today }) {
   return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;

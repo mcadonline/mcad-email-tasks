@@ -1,7 +1,6 @@
 const path = require('path');
 const jex = require('../../services/jex');
 const generateEmails = require('../../lib/generateEmails');
-const log = require('../../lib/log');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -10,7 +9,9 @@ const createSQL = ({ today }) => {
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
   return `
 declare @today datetime;
+declare @tomorrow datetime;
 set @today = ${quotedDateOrGetDate}
+set @tomorrow = dateadd(day,1,@today);
 
 select distinct nm.id_num as id
   , rtrim(nm.first_name) as firstName
@@ -52,14 +53,15 @@ where ss.room_cde = 'OL'
   and sch.crs_cde not like 'GD   6413 %'
   and sch.crs_cde not like 'GD   6511 %'
   and add_dte > @today
+  and add_dte < @tomorrow
   -- current or preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
-  and transaction_sts in ('C','P')
+  and transaction_sts in ('C','P','H')
   `;
 };
 
-async function sendEmails({ today }) {
+async function task({ today }) {
   const sql = createSQL({ today });
   const data = await jex.query(sql);
 
@@ -81,4 +83,4 @@ async function sendEmails({ today }) {
   return emails;
 }
 
-module.exports = sendEmails;
+module.exports = task;
