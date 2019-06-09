@@ -2,8 +2,9 @@ const task = require('./index');
 
 describe('canvasCourseOpen', () => {
   it('generates course open emails', async () => {
-    const emails = await task({ today: '2019-01-20' });
+    const { emails, errors } = await task({ today: '2019-01-20' });
     expect(emails.length).toBe(31);
+    expect(errors).toEqual([]);
 
     const {
       to, from, subject, html,

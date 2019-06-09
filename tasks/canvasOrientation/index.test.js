@@ -2,8 +2,9 @@ const task = require('./index');
 
 describe('canvasOriention', () => {
   it('generates orientation emails', async () => {
-    const emails = await task({ today: '2019-01-15' });
+    const { emails, errors } = await task({ today: '2019-01-15' });
     expect(emails.length).toBe(75);
+    expect(errors).toEqual([]);
 
     const {
       to, from, subject, text,

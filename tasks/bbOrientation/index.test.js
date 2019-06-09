@@ -5,7 +5,8 @@ describe('bbOrientation task', () => {
     // pinning test
     // If today were 1 week before Summer 2018 starts,
     // 52 students would receive notifications
-    const emails = await task({ today: '2018-05-28' });
+    const { emails, errors } = await task({ today: '2018-05-28' });
     expect(emails.length).toBe(52);
+    expect(errors).toEqual([]);
   });
 });
