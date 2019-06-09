@@ -2,8 +2,9 @@ const task = require('./index');
 
 describe('cePapercut', () => {
   it('generates papercut emails', async () => {
-    const emails = await task({ today: '2019-03-21' });
+    const { emails, errors } = await task({ today: '2019-03-21' });
     expect(emails.length).toBe(8);
+    expect(errors).toEqual([]);
 
     const {
       to, from, subject, text,
