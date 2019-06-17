@@ -64,13 +64,11 @@ where ss.room_cde = 'OL'
 
 async function task({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql).then(cleanJexData);
-
-  if (!data.length) return [];
+  const records = await jex.query(sql).then(cleanJexData);
 
   return generateEmails({
     template: path.basename(__dirname),
-    data,
+    records,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
     }) => [
