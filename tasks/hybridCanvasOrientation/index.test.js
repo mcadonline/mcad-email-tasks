@@ -12,7 +12,7 @@ describe('hybridCanvasOrientation', () => {
     expect(/continuing_education@mcad.edu/.test(from)).toBeTruthy();
     expect(/@/.test(to)).toBeTruthy();
     expect(subject).toBe(
-      '✏️ Walking as Artistic Practice begins soon! Setup your MCAD Account now.',
+      '🏃 Walking as Artistic Practice begins soon! Setup your MCAD Account now.',
     );
 
     expect(text).toMatch(/Username [a-z0-9_]+/i);
