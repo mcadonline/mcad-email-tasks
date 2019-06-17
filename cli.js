@@ -103,7 +103,6 @@ async function main() {
 
     // get the emails generated and any errors
     // that occured during generation
-    console.log(cli.flags);
     ({ emails, errors } = await taskFn(cli.flags));
 
     // create a report of how things went
