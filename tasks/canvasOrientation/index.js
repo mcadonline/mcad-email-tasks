@@ -73,11 +73,9 @@ async function task({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql).then(cleanJexData);
 
-  if (!records.length) return [];
-
   return generateEmails({
     template: path.basename(__dirname),
-    data: records,
+    records,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
     }) => [

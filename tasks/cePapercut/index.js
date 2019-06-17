@@ -81,13 +81,11 @@ select distinct nm.id_num as id
 
 async function task({ today }) {
   const sql = createSQL({ today });
-  const data = await jex.query(sql).then(cleanJexData);
+  const records = await jex.query(sql).then(cleanJexData);
 
-  if (!data.length) return [];
-
-  return generateEmails({
+  const { emails, errors } = await generateEmails({
     template: path.basename(__dirname),
-    data,
+    records,
     to: ({
       firstName, lastName, personalEmail, mcadEmail,
     }) => [
@@ -98,6 +96,7 @@ async function task({ today }) {
     bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
   });
+  return { emails, errors };
 }
 
 module.exports = task;
