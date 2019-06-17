@@ -23,6 +23,7 @@ module.exports = {
     to: process.env.log_to,
     from: process.env.log_from,
   },
+  // online courses on Canvas
   canvasCourses: [
     {
       term: 'SP',
@@ -46,6 +47,18 @@ module.exports = {
       term: 'FA',
       year: 2019,
       sections: ['GWD  7410 20', 'CSDE 9478 20', 'GWD  7460 20', 'HS   5010 20'],
+    },
+  ],
+  // F2F courses using Canvas
+  // These students will be emailed about setting up their MCAD
+  // account and going through the Canvas Orientation.
+  // These courses will be _excluded_ from the CE Papercut course emails.
+  // e.g. Ellen Mueller's Walking course
+  hybridCanvasCourses: [
+    {
+      term: 'SU',
+      year: 2019,
+      sections: ['CSLA 4004 01'],
     },
   ],
 };
