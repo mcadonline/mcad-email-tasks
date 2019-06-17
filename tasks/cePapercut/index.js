@@ -2,13 +2,15 @@ const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
+const withoutCoursesSql = require('../../lib/withoutCoursesSql');
+const settings = require('../../settings');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
-  return `
+  const baseQuery = `
   declare @today datetime;
   declare @tomorrow datetime;
   declare @xdaysfromnow datetime;
@@ -75,8 +77,12 @@ select distinct nm.id_num as id
              and sch.add_dte < @tomorrow
          )
      )
-
   `;
+  return withoutCoursesSql({
+    baseQuery,
+    sectionTable: 'sch',
+    courses: settings.hybridCanvasCourses,
+  });
 };
 
 async function task({ today }) {

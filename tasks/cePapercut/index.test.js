@@ -17,4 +17,13 @@ describe('cePapercut', () => {
     // contains username
     expect(/ Username dmarkworth/.test(text)).toBeTruthy();
   });
+  it('does not include hybridCanvas courses', async () => {
+    // TODO: Improve Test
+    // Walking as Artistic Practice is a Hybrid
+    const { emails, errors } = await task({ today: '2019-07-23' });
+    // expect that no emails contain 'CSLA-4004-01'
+    const doesNotContainWalkingCourse = emails.every(({ text }) => !/CSLA-4004-01/.test(text));
+    expect(doesNotContainWalkingCourse).toBeTruthy();
+    expect(errors.length).toBe(0);
+  });
 });

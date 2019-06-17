@@ -15,6 +15,8 @@ const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 const bbCourseOpen = require('./tasks/bbCourseOpen');
 const canvasCourseOpen = require('./tasks/canvasCourseOpen');
 const cePapercut = require('./tasks/cePapercut');
+const hybridCanvasOrientation = require('./tasks/hybridCanvasOrientation');
+const jex = require('./services/jex');
 
 // Tasks
 const validTasks = {
@@ -24,6 +26,7 @@ const validTasks = {
   'canvas-orientation': canvasOrientation,
   'canvas-course-open': canvasCourseOpen,
   'ce-papercut': cePapercut,
+  'hybrid-canvas-orientation': hybridCanvasOrientation,
 };
 const isValidTask = t => !!validTasks[t];
 const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
@@ -104,6 +107,7 @@ async function main() {
     // get the emails generated and any errors
     // that occured during generation
     ({ emails, errors } = await taskFn(cli.flags));
+    jex.close();
 
     // create a report of how things went
     taskReport = createTaskReport({

@@ -8,15 +8,24 @@ const fixDatesInRecord = record => R.map((val) => {
   return val;
 }, record);
 
+// holds the connection pool
+let pool = null;
+
+function jexClose() {
+  pool.close();
+  pool = null;
+}
+
 async function jexQuery(query) {
   const {
     username, password, server, database,
   } = settings.jex;
   const uri = `mssql://${username}:${password}@${server}/${database}`;
   try {
-    const pool = await sql.connect(uri);
+    if (!pool) {
+      pool = await sql.connect(uri);
+    }
     const result = await pool.request().query(query);
-    pool.close();
     const fixedRecords = result.recordset.map(fixDatesInRecord);
     return fixedRecords;
   } catch (err) {
@@ -27,4 +36,5 @@ async function jexQuery(query) {
 
 module.exports = {
   query: jexQuery,
+  close: jexClose,
 };

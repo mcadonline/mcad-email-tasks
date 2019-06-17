@@ -42,14 +42,16 @@ Sends a log file to a given email address.
 
 ## Email Tasks (current and future)
 
-| Done? | Task Name               | When?               | Audience              | Details                                                    |
-| ----- | ----------------------- | ------------------- | --------------------- | ---------------------------------------------------------- |
-| ☑️    | `ol-course-reg-confirm` | Upon registration   | OL Students           | Confirmation that they are registered for an online course |
-| ☑️    | `canvas-orientation`    | 1 week before start | Canvas Pilot Students | How initialize MCAD credentials and use Canvas LMS.        |
-| ☑️    | `bb-orientation`        | 1 week before start | OL Students           | How to initialize MCAD credentials and use Blackboard LMS  |
-| ☑️    | `canvas-course-open`    | Sunday before start | Canvas Pilot Students | Course is open and available on Canvas LMS.                |
-| ☑️    | `bb-course-open`        | Sunday before start | OL Students           | Online course is open and available on Canvas              |
-| ☑️    | `ce-papercut`           | 4 days before start | CE Students           | Info on setting up Papercut account.                       |
+| Done? | Task Name                   | When?               | Audience                                          | Details                                                                     |
+| ----- | --------------------------- | ------------------- | ------------------------------------------------- | --------------------------------------------------------------------------- |
+| ☑️    | `ol-course-reg-confirm`     | Upon registration   | All OL Students                                   | Confirmation that they are registered for an online course                  |
+| ☑️    | `canvas-orientation`        | 1 week before start | OL Canvas Students                                | How initialize MCAD credentials and use Canvas LMS.                         |
+| ☑️    | `bb-orientation`            | 1 week before start | OL Bb Students                                    | How to initialize MCAD credentials and use Blackboard LMS                   |
+| ☑️    | `canvas-course-open`        | Sunday before start | OL Canvas Students                                | Course is open and available on Canvas LMS.                                 |
+| ☑️    | `bb-course-open`            | Sunday before start | OL Bb Students                                    | Online course is open and available on Canvas                               |
+| ☑️    | `ce-papercut`               | 4 days before start | CE non-OL Students using Papercut                 | Info on setting up Papercut account.                                        |
+| ☑️    | `hybrid-canvas-orientation` | 4 days before start | CE non-OL Students using Canvas, but not Papercut | Info on setting up MCAD account, and reviewing Canvas Orientation Materials |
+
 
 ## Overview of Tasks folder
 

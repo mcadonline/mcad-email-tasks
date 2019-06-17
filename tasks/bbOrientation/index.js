@@ -2,7 +2,8 @@ const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
-const withoutCanvasCoursesSql = require('../../lib/withoutCanvasCoursesSql');
+const withoutCoursesSql = require('../../lib/withoutCoursesSql');
+const settings = require('../../settings');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -76,7 +77,11 @@ where ss.room_cde = 'OL'
   )
   `;
 
-  return withoutCanvasCoursesSql(baseQuery, { sectionTable: 'sch' });
+  return withoutCoursesSql({
+    baseQuery,
+    sectionTable: 'sch',
+    courses: settings.canvasCourses,
+  });
 };
 
 async function task({ today }) {
