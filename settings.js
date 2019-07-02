@@ -46,7 +46,14 @@ module.exports = {
     {
       term: 'FA',
       year: 2019,
-      sections: ['GWD  7410 20', 'CSDE 9478 20', 'GWD  7460 20', 'HS   5010 20'],
+      sections: [
+        'GWD  7410 20',
+        'CSDE 9478 20',
+        'GWD  7460 20',
+        'HS   5010 20',
+        'SD   7021 20',
+        'SD   7022 20',
+      ],
     },
   ],
   // F2F courses using Canvas
