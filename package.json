@@ -9,7 +9,9 @@
     "test:watch": "jest --watch",
     "test": "jest",
     "dev": "nodemon ./cli.js --watch . --ext 'js,json,hbs,css,sql'",
-    "start": "./cli.js"
+    "start": "./cli.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +37,8 @@
     "preview-email": "0.0.10",
     "ramda": "0.26.1",
     "react": "^16.7.0",
-    "write": "^1.0.3"
-  }
+    "write": "^1.0.3",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
