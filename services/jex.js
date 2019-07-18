@@ -1,12 +1,5 @@
 const sql = require('mssql');
-const R = require('ramda');
-const correctSQLDateTimeOffset = require('../lib/correctSQLDateTimeOffset');
 const settings = require('../settings');
-
-const fixDatesInRecord = record => R.map((val) => {
-  if (val instanceof Date) return correctSQLDateTimeOffset(val);
-  return val;
-}, record);
 
 // holds the connection pool
 let pool = null;
@@ -17,17 +10,12 @@ function jexClose() {
 }
 
 async function jexQuery(query) {
-  const {
-    username, password, server, database,
-  } = settings.jex;
-  const uri = `mssql://${username}:${password}@${server}/${database}`;
   try {
     if (!pool) {
-      pool = await sql.connect(uri);
+      pool = await sql.connect(settings.jex);
     }
     const result = await pool.request().query(query);
-    const fixedRecords = result.recordset.map(fixDatesInRecord);
-    return fixedRecords;
+    return result.recordset;
   } catch (err) {
     console.error(err);
     throw err;

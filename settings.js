@@ -8,10 +8,13 @@ module.exports = {
     apiKey: process.env.postmark_api_key,
   },
   jex: {
-    username: process.env.jex_username,
+    user: process.env.jex_username,
     password: process.env.jex_password,
     server: process.env.jex_server,
     database: process.env.jex_database,
+    options: {
+      useUTC: false,
+    },
   },
   ldap: {
     url: process.env.ldap_url,

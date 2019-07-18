@@ -53,7 +53,8 @@ async function main() {
   
   Options
     --today <ISO Date>     
-        generate emails as if today was given date
+        generate emails as if today was given date. If no date 
+        is provided, current local date is used.
     --preview
         opens a preview of the email
     --send
@@ -70,7 +71,7 @@ async function main() {
       flags: {
         today: {
           type: 'string',
-          default: null,
+          default: DateTime.local().toISODate(),
         },
         preview: {
           type: 'boolean',
