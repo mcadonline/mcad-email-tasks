@@ -50,7 +50,6 @@ module.exports = {
       term: 'FA',
       year: 2019,
       sections: [
-        'GWD  7800 20', // MAGWD / Capstone
         'GWD  7410 20', // MAGWD / Web Design
         'CSDE 9478 20', // CE / Motion Illustration
         'GWD  7460 20', // MAGWD / UX Design
