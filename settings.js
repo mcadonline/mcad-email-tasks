@@ -53,7 +53,6 @@ module.exports = {
         'GWD  7410 20', // MAGWD / Web Design
         'CSDE 9478 20', // CE / Motion Illustration
         'GWD  7460 20', // MAGWD / UX Design
-        'HS   5010 20', // LA / LA Adv Sem
         'GWD  6610 20', // MAGWD / Web Dev: HTML + CSS
         'IDM  6611 20', // Web Dev: HTML
         'IDM  6612 20', // Web Dev: CSS
@@ -62,16 +61,16 @@ module.exports = {
         'SD   7021 20', // SD Thesis Project 1
         'SD   7022 20', // SD Thesis Project 2
         'CSDE 9305 20', // CE / Comic Art Crash Course
-        'CSID 6631 20', // Web Dev: PHP and MySQL
         'HS   3317 20', // LA / Myth, Ritual, and Symbolism
         'SD   6510 20', // SD / Systems Thinking
         'VC   4207 20', // CE / Graphic Design Essentials
+        'CSID 6631 20', // CE / Web Dev: PHP and MySQL
         'CSID 6632 20', // CE / Web Dev: Wordpress
         'CSMA 9342 20', // CE / Game Mechanics
       ],
     },
   ],
-  // F2F courses using Canvas
+  // CE F2F courses using Canvas
   // These students will be emailed about setting up their MCAD
   // account and going through the Canvas Orientation.
   // These courses will be _excluded_ from the CE Papercut course emails.
