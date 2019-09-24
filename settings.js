@@ -67,6 +67,7 @@ module.exports = {
         'CSID 6631 20', // CE / Web Dev: PHP and MySQL
         'CSID 6632 20', // CE / Web Dev: Wordpress
         'CSMA 9342 20', // CE / Game Mechanics
+        'CST  9570 20', // CE / Portfolio Prep
       ],
     },
   ],
