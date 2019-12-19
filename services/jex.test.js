@@ -11,10 +11,11 @@ describe('jex service', () => {
         , sm.first_begin_dte as startDate
         from section_master sm
         where crs_cde = 'IDM  6611 20'
+          and yr_cde = '2015'
       `;
 
       const records = await jex.query(sql);
-      expect(records.length).toBe(8);
+      expect(records.length).toBe(2);
       expect(records[0]).toEqual({
         academicYear: 2015,
         term: 'SP',
