@@ -6,12 +6,10 @@ describe('canvasOriention', () => {
     expect(emails.length).toBeGreaterThan(10);
     expect(errors).toEqual([]);
 
-    const {
-      to, from, subject, text,
-    } = emails[0];
+    const { to, from, subject, text } = emails[0];
     expect(/online@mcad.edu/.test(from)).toBeTruthy();
     expect(/@/.test(to)).toBeTruthy();
-    expect(subject).toMatch('🐼 Using Canvas LMS for');
+    expect(subject).toMatch(/🎒 Get Ready!/);
     // contains username
     expect(/Username: [a-z0-9-]+/.test(text)).toBeTruthy();
   });
