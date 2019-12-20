@@ -1,8 +1,6 @@
-const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
-const generateEmails = require('../../lib/generateEmails');
-const withOnlyCoursesSql = require('../../lib/withOnlyCoursesSql');
+const withoutCoursesSql = require('../../lib/withoutCoursesSql');
 const settings = require('../../settings');
 
 const createSQL = ({ today }) => {
@@ -75,31 +73,17 @@ where
       )
   )
   `;
-
-  return withOnlyCoursesSql({
+  return withoutCoursesSql({
     baseQuery,
     sectionTable: 'sch',
     courses: settings.olBlackboardCourses,
   });
 };
 
-async function task({ today }) {
+async function getCanvasCourseOpenRecords({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql).then(cleanJexData);
-
-  return generateEmails({
-    template: path.basename(__dirname),
-    records,
-    to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
-      [
-        `${firstName} ${lastName} <${personalEmail}>`,
-        `${firstName} ${lastName} <${mcadEmail}>`,
-      ].join(', '),
-    from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () =>
-      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
-    requiredFields: ['username', 'personalEmail'],
-  });
+  return records;
 }
 
-module.exports = task;
+module.exports = getCanvasCourseOpenRecords;

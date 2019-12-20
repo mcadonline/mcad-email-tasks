@@ -1,7 +1,5 @@
-const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
-const generateEmails = require('../../lib/generateEmails');
 const withOnlyCoursesSql = require('../../lib/withOnlyCoursesSql');
 const settings = require('../../settings');
 
@@ -10,11 +8,14 @@ const createSQL = ({ today }) => {
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
+
   const baseQuery = `
 declare @today datetime;
 declare @tomorrow datetime;
+declare @weekfromnow  datetime;
 set @today = ${quotedDateOrGetDate}
 set @tomorrow = dateadd(day,1,@today);
+set @weekfromnow = dateadd(day, cast(7 as int), @today);
 
 select distinct nm.id_num as id
   , rtrim(nm.first_name) as firstName
@@ -35,7 +36,6 @@ select distinct nm.id_num as id
   , ss.begin_dte as startDate
   , ss.end_dte as endDate
   , sch.add_dte as createdAt
-  , DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte) as sundayBeforeStart
 from student_crs_hist sch
 inner join name_master nm
     on sch.id_num = nm.id_num
@@ -58,18 +58,19 @@ where
   and sch.crs_cde not like 'GD   6411 %'
   and sch.crs_cde not like 'GD   6413 %'
   and sch.crs_cde not like 'GD   6511 %'
-  -- current, preregistered students
+  -- current or preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
   and transaction_sts in ('C','P','H')
+  -- ignore canvas courses
   and ( 
-    -- today is the sunday before the start date
-    @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
-    -- handle any late adds
-    --   i.e., if today is after the sunday before start
-    --   and their add_dte is EXACTLY today
+    -- course begins in a week
+    ss.begin_dte = @weekfromnow
+    -- handle late adds.
+    -- course begins in less than a week
+    -- and their add_dte is EXACTLY today
       or (
-        @today > DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
+        ss.begin_dte < @weekfromnow
         and sch.add_dte > @today
         and sch.add_dte < @tomorrow
       )
@@ -83,23 +84,10 @@ where
   });
 };
 
-async function task({ today }) {
+async function getBbOrientationRecords({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql).then(cleanJexData);
-
-  return generateEmails({
-    template: path.basename(__dirname),
-    records,
-    to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
-      [
-        `${firstName} ${lastName} <${personalEmail}>`,
-        `${firstName} ${lastName} <${mcadEmail}>`,
-      ].join(', '),
-    from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () =>
-      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
-    requiredFields: ['username', 'personalEmail'],
-  });
+  return records;
 }
 
-module.exports = task;
+module.exports = getBbOrientationRecords;
