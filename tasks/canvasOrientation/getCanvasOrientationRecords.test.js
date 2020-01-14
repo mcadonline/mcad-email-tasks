@@ -6,7 +6,7 @@ describe('getCanvasOrientationRecords', () => {
     expect(records.length).toBeGreaterThan(100);
     expect(records.length).toBeLessThan(300);
     const { courseCode, startDate } = records[0];
-    expect(courseCode).toMatchInlineSnapshot(`"GWD  6420 20"`);
+    expect(courseCode).toMatchInlineSnapshot(`"SD   6500 20"`);
     expect(startDate).toMatchInlineSnapshot(`"Tue, Jan 21, 2020"`);
   }, 15000);
 });
