@@ -3,10 +3,13 @@ const getCanvasOrientationRecords = require('./getCanvasOrientationRecords');
 describe('getCanvasOrientationRecords', () => {
   it('gets orientation records', async () => {
     const records = await getCanvasOrientationRecords({ today: '2020-01-14' });
-    expect(records.length).toBeGreaterThan(100);
-    expect(records.length).toBeLessThan(300);
-    const { courseCode, startDate } = records[0];
-    expect(courseCode).toMatchInlineSnapshot(`"SD   6500 20"`);
-    expect(startDate).toMatchInlineSnapshot(`"Tue, Jan 21, 2020"`);
+    const sdEnrollments = records.filter(
+      enrollmentRecord => enrollmentRecord.courseCode === 'SD   6500 20',
+    );
+    expect(sdEnrollments.length).toBeGreaterThan(5);
+
+    const firstEnrollment = sdEnrollments[0];
+    expect(firstEnrollment.courseCode).toMatchInlineSnapshot('"SD   6500 20"');
+    expect(firstEnrollment.startDate).toMatchInlineSnapshot(`"Tue, Jan 21, 2020"`);
   }, 15000);
 });
