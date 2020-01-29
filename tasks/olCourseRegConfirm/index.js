@@ -69,14 +69,15 @@ async function task({ today }) {
   return generateEmails({
     template: path.basename(__dirname),
     records,
-    to: ({
-      firstName, lastName, personalEmail, mcadEmail,
-    }) => [
-      personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
-      mcadEmail ? `${firstName} ${lastName} <${mcadEmail}>` : '',
-    ].join(', '),
+    to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
+      [
+        personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
+        mcadEmail ? `${firstName} ${lastName} <${mcadEmail}>` : '',
+      ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    bcc: () =>
+      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    requiredFields: ['personalEmail'],
   });
 }
 
