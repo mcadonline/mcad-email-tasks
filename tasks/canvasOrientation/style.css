@@ -1,6 +1,6 @@
 /* Base ------------------------------ */
 *:not(br):not(tr):not(html) {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   box-sizing: border-box;
 }
 
@@ -174,3 +174,28 @@ h2 {
 .header-image {
   font-size: 2.5rem;
 }
+
+.callout-section h3 {
+  font-size: 1rem;
+}
+
+/* .callout-section {
+  border-top: 1rem solid #ffbd00;
+  background: #fff5be;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  color: #6b5d38;
+  margin: 1.5rem 0;
+}
+
+.callout-section h3 {
+  font-size: 1rem;
+  margin-top: 0;
+}
+.callout-section li {
+  margin: 1rem;
+}
+
+.callout-section .info-box {
+  background: #fff9da;
+} */

@@ -13,6 +13,6 @@ describe('canvasOrientation', () => {
     expect(/@/.test(to)).toBeTruthy();
     expect(subject).toMatch('🎒 Get Ready!');
     // contains username
-    expect(/Username: [a-z0-9-]+/.test(text)).toBeTruthy();
+    expect(/USERNAME: [a-z0-9-]+/.test(text)).toBeTruthy();
   }, 15000);
 });
