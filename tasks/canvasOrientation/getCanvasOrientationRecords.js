@@ -53,8 +53,6 @@ where
   ss.room_cde = 'OL'
   -- dont include waitlisted
   and sch.waitlist_flag is null
-  -- only include students with username
-  and am_meml.addr_line_2 is not null
   -- only students which begin within a week
   -- or if it's less than one week, they've
   -- been added in the last 24 hours
