@@ -12,6 +12,7 @@ const createTaskReport = require('./lib/createTaskReport');
 const canvasOrientation = require('./tasks/canvasOrientation');
 const bbOrientation = require('./tasks/bbOrientation');
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
+const olWorkshopRegConfirm = require('./tasks/olWorkshopRegConfirm');
 const bbCourseOpen = require('./tasks/bbCourseOpen');
 const canvasCourseOpen = require('./tasks/canvasCourseOpen');
 const cePapercut = require('./tasks/cePapercut');
@@ -21,6 +22,7 @@ const jex = require('./services/jex');
 // Tasks
 const validTasks = {
   'ol-course-reg-confirm': olCourseRegConfirm,
+  'ol-workshop-reg-confirm': olWorkshopRegConfirm,
   'bb-orientation': bbOrientation,
   'bb-course-open': bbCourseOpen,
   'canvas-orientation': canvasOrientation,
@@ -29,19 +31,19 @@ const validTasks = {
   'hybrid-canvas-orientation': hybridCanvasOrientation,
 };
 const isValidTask = t => !!validTasks[t];
-const stringifyTasks = (tasks = validTasks) => Object.keys(tasks)
-  .map(t => `\n\t    ${t}`)
-  .join(' ');
+const stringifyTasks = (tasks = validTasks) =>
+  Object.keys(tasks)
+    .map(t => `\n\t    ${t}`)
+    .join(' ');
 
-const createLogSubject = ({
-  emails, errors, opts, taskName,
-}) => [
-  `[${taskName}]`,
-  errors.length ? `❌  ${errors.length} errors.` : '',
-  emails.length ? `✉️  ${emails.length} emails.` : 'No emails.',
-  emails.length && opts.send ? 'Sending.' : '',
-  emails.length && !opts.send ? 'Generated, NOT sent.' : '',
-].join(' ');
+const createLogSubject = ({ emails, errors, opts, taskName }) =>
+  [
+    `[${taskName}]`,
+    errors.length ? `❌  ${errors.length} errors.` : '',
+    emails.length ? `✉️  ${emails.length} emails.` : 'No emails.',
+    emails.length && opts.send ? 'Sending.' : '',
+    emails.length && !opts.send ? 'Generated, NOT sent.' : '',
+  ].join(' ');
 
 async function main() {
   const cli = meow(
