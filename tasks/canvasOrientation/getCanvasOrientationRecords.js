@@ -51,6 +51,8 @@ inner join section_schedules ss
 where 
   -- only online courses
   ss.room_cde = 'OL'
+  -- ignore online workshops
+  and sch.crs_cde not like 'OL   0% %'
   -- dont include waitlisted
   and sch.waitlist_flag is null
   -- only students which begin within a week

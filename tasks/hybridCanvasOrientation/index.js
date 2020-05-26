@@ -63,6 +63,7 @@ select distinct nm.id_num as id
      and sch.stud_div = 'CE' -- only send to CE students (not postbacc students)
      and sm.crs_cde not like 'SE %' --ignore PCSS courses
      and sm.crs_cde not like 'MCAD 0101 %' -- ignore MCADemy
+     and sch.crs_cde not like 'OL   0% %' -- ignore OL Workshops
      and ss.room_cde <> 'OL' -- ignore Online Learning courses
      and transaction_sts in ('C','P','H') -- ignore waitlisted, dropped, or historical students (withdrawn, grade submitted)
      and (
@@ -92,14 +93,14 @@ async function task({ today }) {
   return generateEmails({
     template: path.basename(__dirname),
     records,
-    to: ({
-      firstName, lastName, personalEmail, mcadEmail,
-    }) => [
-      `${firstName} ${lastName} <${personalEmail}>`,
-      `${firstName} ${lastName} <${mcadEmail}>`,
-    ].join(', '),
+    to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
+      [
+        `${firstName} ${lastName} <${personalEmail}>`,
+        `${firstName} ${lastName} <${mcadEmail}>`,
+      ].join(', '),
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
-    bcc: () => 'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    bcc: () =>
+      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
   });
 }

@@ -52,6 +52,8 @@ where
   ss.room_cde = 'OL'
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD 0101 %'
+  -- ignore online workshops
+  and sch.crs_cde not like 'OL   0% %'
   -- ignore GDC Adobe Workshops (1-day)
   and sch.crs_cde not like 'GD   6411 %'
   and sch.crs_cde not like 'GD   6413 %'
