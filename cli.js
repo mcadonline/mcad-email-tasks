@@ -10,10 +10,9 @@ const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
 const createTaskReport = require('./lib/createTaskReport');
 const canvasOrientation = require('./tasks/canvasOrientation');
-const bbOrientation = require('./tasks/bbOrientation');
+
 const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
 const olWorkshopRegConfirm = require('./tasks/olWorkshopRegConfirm');
-const bbCourseOpen = require('./tasks/bbCourseOpen');
 const canvasCourseOpen = require('./tasks/canvasCourseOpen');
 const cePapercut = require('./tasks/cePapercut');
 const hybridCanvasOrientation = require('./tasks/hybridCanvasOrientation');
@@ -23,8 +22,6 @@ const jex = require('./services/jex');
 const validTasks = {
   'ol-course-reg-confirm': olCourseRegConfirm,
   'ol-workshop-reg-confirm': olWorkshopRegConfirm,
-  'bb-orientation': bbOrientation,
-  'bb-course-open': bbCourseOpen,
   'canvas-orientation': canvasOrientation,
   'canvas-course-open': canvasCourseOpen,
   'ce-papercut': cePapercut,
