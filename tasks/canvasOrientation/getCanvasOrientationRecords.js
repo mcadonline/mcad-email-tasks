@@ -69,7 +69,7 @@ where
   return withoutCoursesSql({
     baseQuery,
     sectionTable: 'sch',
-    courses: settings.olBlackboardCourses,
+    courses: settings.excludeCoursesFromCanvasEmails,
   });
 };
 

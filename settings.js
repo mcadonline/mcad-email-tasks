@@ -26,7 +26,7 @@ module.exports = {
     to: process.env.log_to,
     from: process.env.log_from,
   },
-  olBlackboardCourses: [
+  excludeCoursesFromCanvasEmails: [
     {
       term: 'SP',
       year: 2020,
