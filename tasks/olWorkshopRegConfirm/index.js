@@ -67,13 +67,13 @@ async function task({ today }) {
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
-        personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
         mcadEmail ? `${firstName} ${lastName} <${mcadEmail}>` : '',
+        personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () =>
       'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
-    requiredFields: ['personalEmail'],
+    requiredFields: ['mcadEmail'],
   });
 }
 
