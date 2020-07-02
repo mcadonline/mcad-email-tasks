@@ -61,7 +61,7 @@ select distinct nm.id_num as id
          'PB' -- include all GDC courses
      ) 
      and sch.stud_div = 'CE' -- only send to CE students (not postbacc students)
-     and sm.crs_cde not like 'SE %' --ignore PCSS courses
+     and sm.crs_cde not like 'SE   100%' --ignore PCSS courses
      and sm.crs_cde not like 'MCAD 0101 %' -- ignore MCADemy
      and sch.crs_cde not like 'OL   0% %' -- ignore online workshops
      and ss.room_cde <> 'OL' -- ignore Online Learning courses
