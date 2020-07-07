@@ -73,7 +73,7 @@ async function task({ today }) {
     from: () => 'MCAD Online Learning <online@mcad.edu>',
     bcc: () =>
       'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
-    requiredFields: ['mcadEmail'],
+    requiredFields: ['username', 'mcadEmail'],
   });
 }
 
