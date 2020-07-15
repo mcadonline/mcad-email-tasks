@@ -1,6 +1,6 @@
 {
   "name": "mcad-email-tasks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCAD Email Tasks will generate and send emails",
   "bin": {
     "mcad-email-tasks": "./cli.js"
