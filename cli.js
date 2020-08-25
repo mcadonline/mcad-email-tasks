@@ -9,23 +9,39 @@ const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
 const createTaskReport = require('./lib/createTaskReport');
-const canvasOrientation = require('./tasks/canvasOrientation');
 
-const olCourseRegConfirm = require('./tasks/olCourseRegConfirm');
-const olWorkshopRegConfirm = require('./tasks/olWorkshopRegConfirm');
-const canvasCourseOpen = require('./tasks/canvasCourseOpen');
-const cePapercut = require('./tasks/cePapercut');
-const hybridCanvasOrientation = require('./tasks/hybridCanvasOrientation');
+// online course tasks
+const olCourseConfirmRegistration = require('./tasks/olCourseConfirmRegistration');
+const olCourseGetReady = require('./tasks/olCourseGetReady');
+const olCourseOpen = require('./tasks/olCourseOpen');
+
+// online workshop tasks
+const olWorkshopConfirmRegistration = require('./tasks/olWorkshopConfirmRegistration');
+
+// remote course tasks
+const remoteCourseGetReady = require('./tasks/remoteCourseGetReady');
+const remoteCourseOpen = require('./tasks/remoteCourseOpen');
+
+// remote ce course tasks
+const ceCourseGetReady = require('./tasks/ceCourseGetReady');
 const jex = require('./services/jex');
 
 // Tasks
 const validTasks = {
-  'ol-course-reg-confirm': olCourseRegConfirm,
-  'ol-workshop-reg-confirm': olWorkshopRegConfirm,
-  'canvas-orientation': canvasOrientation,
-  'canvas-course-open': canvasCourseOpen,
-  'ce-papercut': cePapercut,
-  'hybrid-canvas-orientation': hybridCanvasOrientation,
+  // online course tasks
+  'ol-course-confirm-registration': olCourseConfirmRegistration,
+  'ol-course-get-ready': olCourseGetReady,
+  'ol-course-open': olCourseOpen,
+
+  // online workshop tasks
+  'ol-workshop-confirm-registration': olWorkshopConfirmRegistration,
+
+  // remote course tasks
+  'remote-course-get-ready': remoteCourseGetReady,
+  'remote-course-open': remoteCourseOpen,
+
+  // ce remote course tasks
+  'ce-course-get-ready': ceCourseGetReady,
 };
 const isValidTask = t => !!validTasks[t];
 const stringifyTasks = (tasks = validTasks) =>

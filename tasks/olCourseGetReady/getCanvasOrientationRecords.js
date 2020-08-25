@@ -8,7 +8,7 @@ const createSQL = ({ today }) => {
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
-  const baseQuery = `
+  return `
 declare @today datetime;
 declare @tomorrow datetime;
 declare @weekfromnow  datetime;
@@ -65,12 +65,6 @@ where
         and sch.add_dte < @tomorrow
     )
   )`;
-
-  return withoutCoursesSql({
-    baseQuery,
-    sectionTable: 'sch',
-    courses: settings.excludeCoursesFromCanvasEmails,
-  });
 };
 
 async function getCanvasOrientationRecords({ today }) {

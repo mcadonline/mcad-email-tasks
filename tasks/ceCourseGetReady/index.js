@@ -2,15 +2,13 @@ const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
-const withOnlyCoursesSql = require('../../lib/withOnlyCoursesSql');
-const settings = require('../../settings');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
   // otherwise getdate() will include time and the query
   // won't work as expected
   const quotedDateOrGetDate = today ? `'${today}'` : 'CAST(getdate() AS date)';
-  const baseQuery = `
+  return `
   declare @today datetime;
   declare @tomorrow datetime;
   declare @xdaysfromnow datetime;
@@ -61,9 +59,9 @@ select distinct nm.id_num as id
          'PB' -- include all GDC courses
      ) 
      and sch.stud_div = 'CE' -- only send to CE students (not postbacc students)
-     and sm.crs_cde not like 'SE %' --ignore PCSS courses
+     and sm.crs_cde not like 'SE   100%' --ignore PCSS courses
      and sm.crs_cde not like 'MCAD 0101 %' -- ignore MCADemy
-     and sch.crs_cde not like 'OL   0% %' -- ignore OL Workshops
+     and sch.crs_cde not like 'OL   0% %' -- ignore online workshops
      and ss.room_cde <> 'OL' -- ignore Online Learning courses
      and transaction_sts in ('C','P','H') -- ignore waitlisted, dropped, or historical students (withdrawn, grade submitted)
      and (
@@ -79,18 +77,13 @@ select distinct nm.id_num as id
          )
      )
   `;
-  return withOnlyCoursesSql({
-    baseQuery,
-    sectionTable: 'sch',
-    courses: settings.hybridCanvasCourses,
-  });
 };
 
 async function task({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql).then(cleanJexData);
 
-  return generateEmails({
+  const { emails, errors } = await generateEmails({
     template: path.basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
@@ -103,6 +96,7 @@ async function task({ today }) {
       'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
     requiredFields: ['username', 'personalEmail'],
   });
+  return { emails, errors };
 }
 
 module.exports = task;

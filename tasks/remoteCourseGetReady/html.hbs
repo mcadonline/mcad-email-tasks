@@ -1,0 +1,76 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css" data-inline="data-inline">
+</head>
+
+<body>
+  <p class="preheader">
+    Your course begins on {{startDate}}.
+  </p>
+
+  <div class="container">
+    <header class="mcad-frame">
+      MCAD
+      ONLINE
+      LEARNING
+    </header>
+
+    <main>
+
+      <header class="email-header">
+        <div class="header-image">🎒</div>
+        <h1><strong>{{courseName}}</strong> Starts Next Week</h1>
+      </header>
+
+      <p>Hello {{ firstName }},</p>
+
+      <p>Your course will begin soon:</p>
+
+      <div class="info-box course-info">
+        <p><b>{{courseName}} ({{term}} {{year}})</b></p>
+        <p></p>
+        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{startDate}} – {{endDate}}</p>
+      </div>
+
+      <h2>What's Next?</h2>
+      <p>
+        Watch your email. This class has a remote meeting. Sometime this week, your professor will email with specifics
+        about your first
+        class meeting.
+      </p>
+
+      <p>Expect to receive a meeting link, a draft syllabus, and a tentative agenda for the first day.</p>
+
+      <h2>When Can I Access My Class On Canvas?</h2>
+
+      <p>You will not see your course on Canvas until the open date (unless your professor chooses to publish it
+        earlier).</p>
+
+      <p>Your Canvas classroom will open on:</p>
+
+      <div class="info-box">
+        <p class="key-value">
+          <b class="key">Course Opens</b>
+          <code class="value">{{ openDate }}</code>
+        </p>
+      </div>
+
+      <h2>What is Canvas? How do I use it?</h2>
+
+      <p>Learn more at: <a href="https://canvas.mcad.edu/orientation">https://canvas.mcad.edu/orientation</a>.</p>
+
+
+      <h2>I have a question about my class. How do I contact my professor?</h2>
+
+      <p>You can look up faculty and staff email on the <a href="https://intranet.mcad.edu/directory">MCAD
+          Intranet Directory</a></p>
+
+      <p>See you soon!</p>
+
+    </main>
+  </div>
+</body>
+
+</html>

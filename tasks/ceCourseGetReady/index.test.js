@@ -6,9 +6,7 @@ describe('cePapercut', () => {
     expect(emails.length).toBe(8);
     expect(errors).toEqual([]);
 
-    const {
-      to, from, subject, text,
-    } = emails[0];
+    const { to, from, subject, text } = emails[0];
     expect(/continuing_education@mcad.edu/.test(from)).toBeTruthy();
     expect(/@/.test(to)).toBeTruthy();
     expect(subject).toBe(
