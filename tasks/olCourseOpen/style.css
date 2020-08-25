@@ -174,3 +174,12 @@ h2 {
 .header-image {
   font-size: 2.5rem;
 }
+
+.questions-section h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.questions-section p {
+  margin-top: 0.5rem;
+}
