@@ -39,6 +39,10 @@ td {
   word-break: break-word;
 }
 
+h3 {
+  font-size: 1rem;
+}
+
 .container {
   max-width: 570px;
   margin: 0 auto;
