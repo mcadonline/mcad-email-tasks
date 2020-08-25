@@ -148,12 +148,11 @@ h2 {
 .key-value .key {
   font-size: 0.75rem;
   text-transform: uppercase;
-  display: inline-block;
-  margin-right: 1rem;
+  margin-top: 1rem;
 }
 .key-value .value {
-  font-family: monospace;
-  font-size: 1.25rem;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .step-by-step tr > td:first-of-type {
@@ -162,6 +161,9 @@ h2 {
   padding-right: 1rem;
 }
 
+.contact-info {
+  padding-left: 1rem;
+}
 .contact-info p {
   margin: 0;
 }
@@ -173,4 +175,25 @@ h2 {
 
 .header-image {
   font-size: 2.5rem;
+}
+
+.callout {
+  border-left: 0.5rem solid #ffbd00;
+  background: #fff5be;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  color: #6b5d38;
+  margin: 1.5rem 0;
+  display: flex;
+}
+
+.callout__icon {
+  font-style: normal;
+  font-size: 2rem;
+  margin-right: 1rem;
+  display: inline-block;
+}
+
+.callout__heading {
+  margin: 0.5rem 0;
 }

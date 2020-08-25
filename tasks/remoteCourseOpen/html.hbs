@@ -6,7 +6,7 @@
 
 <body>
   <p class="preheader">
-    We invite you to login and explore your online classroom before your official first day.
+
   </p>
   <div class="container">
     <header class="mcad-frame">
@@ -24,7 +24,7 @@
       <p>Hello {{ firstName }},</p>
 
       <p>
-        Your online course is now OPEN:
+        Your course's Canvas classroom is now OPEN:
       </p>
 
       <div class="info-box course-info">
@@ -33,47 +33,82 @@
         <p>{{startDate}} – {{endDate}}</p>
       </div>
 
-      <h2>TASK 1: LOGIN AND EXPLORE</h2>
+      <h2>Step 1</h2>
+
+      <p><a class="button" href="https://canvas.mcad.edu">Login to Canvas</a>
+      </p>
 
       <p>
-        We invite you to login and explore your online classroom before your official first day. It's a good time to
-        read the announcements, review the syllabus, and check out what your
-        teacher is planning for the first week of class.
+        Make sure your MCAD Canvas account works by signing in to <a href="https://canvas.mcad.edu">canvas.mcad.edu</a>.
+        If you cannot login, try <a href="https://password.mcad.edu/index.php?selfservice=forgotpw">resetting your
+          password</a> or contacting the friendly folks at the <a
+          href="https://intranet.mcad.edu/department/help-desk">MCAD Help Desk</a>:
       </p>
 
-      <p><a class="button" href="https://canvas.mcad.edu">Login to Canvas LMS</a>
-      </p>
-
-      <aside>
-        <p><b>Having Trouble?</b> Earlier this week, we sent an email about <a
-            href="http://canvas.mcad.edu/orientation.html">how to login
-            and get started</a>. Please review those materials, if you haven't already.
-        </p>
-      </aside>
-
-      <h2>TASK 2: YOUR FIRST ASSIGNMENT (DUE DAY 1)</h2>
-
-      <p>
-        Every online course has a first assignment due by the end of Day 1 – typically a discussion post introducing
-        yourself. Be sure to complete this!
-      </p>
-
-      <p>You'll find instructions in the <em>Start Here!</em> section of your online classroom.</p>
-
-      <div class="info-box">
-        <p class="key-value">
-          <b class="key">Due</b>
-          <code class="value">{{ startDate }}, 11:59pm CT</code>
-        </p>
+      <div class="contact-info">
+        <p><a href="mailto:helpdesk@mcad.edu">helpdesk@mcad.edu</a></p>
+        <p><a href="tel:6128743666">612-874-3666</a></p>
       </div>
+
+
+      <h2>Step 2</h2>
+
+      <p><a class="button" href="https://canvas.mcad.edu/orientation">Begin Canvas Orientation</a>
+      </p>
+
+      <p>
+        If you're new to Canvas <a href="https://canvas.mcad.edu/orientation">watch the Canvas
+          Orientation</a>.</p>
+
+      <p>
+        This orientation will take you about an hour. It includes an overview of Canvas,
+        tips for setting up notifications, checking grades, getting the app, and more.
+      </p>
+
+      <h2>Step 3</h2>
+
+      <p><a class="button" href="https://canvas.mcad.edu">Explore Your Canvas Classroom</a>
+      </p>
+
+      <p>Some things to do:</p>
+
+      <ul>
+        <li>Review the syllabus</li>
+        <li>Find your remote class meeting link (it's probably with the syllabus)</li>
+        <li>Check out what's planned for the first week of class</li>
+      </ul>
+
+      <section class="callout">
+        <i class="callout__icon">⚠️</i>
+        <div class="callout__contents">
+          <h3 class="callout__heading">Note</h3>
+          <p>
+            Most classes will be using Canvas LMS this semester, but some faculty have opted to continue using the old
+            Blackboard system. You will see a message in your Canvas class redirecting you to Blackboard if this is the
+            case.
+          </p>
+        </div>
+      </section>
 
       <h2>Questions? Need Help?</h2>
-      <p>Contact MCAD Online Learning</p>
-      <div class="contact-info">
-        <p><a href="mailto:online@mcad.edu">online@mcad.edu</a></p>
-        <p><a href="tel:6128743618">612-874-3618</a></p>
-        <p><a href="tel:18008746233">1-800-874-MCAD (6233)</a> – press 4 for Online Learning</p>
-      </div>
+
+      <dl class="key-value">
+        <dt class="key">Trouble logging in?</dt>
+        <dd class="value">
+          <a href="mailto:helpdesk@mcad.edu">helpdesk@mcad.edu</a>
+        </dd>
+
+        <dt class="key">Questions about Canvas?</dt>
+        <dd class="value">
+          <a href="mailto:online@mcad.edu">online@mcad.edu</a>
+        </dd>
+
+        <dt class="key">Something else?</dt>
+        <dd class="value">
+          Try the <a href="https://intranet.mcad.edu/directory">MCAD Intranet Directory</a>.
+        </dd>
+
+      </dl>
       <p>Have a great semester!</p>
     </main>
   </div>
