@@ -56,12 +56,11 @@ const createSQL = ({ today }) => {
     left join NAME_MASTER nm_faculty
       on sm.LEAD_INSTRUCTR_ID = nm_faculty.ID_NUM
   where 
-    -- only remote courses
-    ss.room_cde = 'REM'
+    -- both remote and online courses
+    ss.room_cde in ('REM','OL')
     -- ignore list
-    and ss.room_cde <> 'OL' -- Not fully Online courses
     and sch.crs_div not in ('CE') -- No CE courses
-    and sch.crs_cde not like '% IN99 %' -- Internships
+    -- and sch.crs_cde not like '% IN99 %' -- Internships
     and sch.crs_cde not like '% EX99 %' -- Externships
     and sch.crs_cde not like '% IS99 %' -- Independent Studies
     and sch.crs_cde not like 'OC %' -- off campus
@@ -69,10 +68,11 @@ const createSQL = ({ today }) => {
     and sch.crs_cde not like 'DT %' -- Preregistration courses
     and sch.crs_cde not like 'MCAD %' -- MCADemy
     and sch.crs_cde not like 'OL   0% %' -- Online Learning Workshops
-    and sch.waitlist_flag is null -- dont include waitlisted students
-  
-    -- dont send this notification if the course has already started
-    and sch.ADD_DTE <= ss.BEGIN_DTE
+    -- NOTE: Don't check sch.waitlist_flag
+    -- if a student is added after being waitlisted, 
+    -- the waitlist_flag will still be set. Records recommends checking
+    -- transaction_sts = 'W' instead.
+    and sch.TRANSACTION_STS not in ('W') -- dont include waitlisted students
   
     -- only students which begin within a week
     and ss.begin_dte = @weekfromnow
