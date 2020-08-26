@@ -54,7 +54,7 @@ where
   -- ignore online workshops
   and sch.crs_cde not like 'OL   0% %'
   -- dont include waitlisted
-  and sch.transaction_status not in ('W')
+  and sch.transaction_sts not in ('W')
   -- only students which begin within a week
   -- or if it's less than one week, they've
   -- been added in the last 24 hours
