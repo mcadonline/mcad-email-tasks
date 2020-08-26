@@ -8,6 +8,7 @@ const settings = require('./settings');
 const log = require('./lib/log');
 const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
+const sendEmailBatch = require('./lib/sendEmailBatch');
 const createTaskReport = require('./lib/createTaskReport');
 
 // online course tasks
@@ -138,7 +139,8 @@ async function main() {
     // Handle output depending on options
     if (emails.length && send) {
       console.log(`sending ${emails.length} emails...`);
-      await Promise.all(emails.map(sendEmail));
+      const response = await sendEmailBatch(emails);
+      console.log(response);
     }
 
     if (emails.length && preview) {
@@ -146,24 +148,24 @@ async function main() {
         .then(log)
         .catch(log);
     }
+
+    if (emailLog) {
+      const subject = createLogSubject({
+        emails,
+        errors,
+        opts: cli.flags,
+        taskName: taskChoice,
+      });
+      sendEmail({
+        to: emailLog,
+        from: settings.log.from,
+        subject,
+        text: taskReport,
+      });
+    }
   } catch (error) {
     log('❌  Error');
     log(error);
-  }
-
-  if (emailLog) {
-    const subject = createLogSubject({
-      emails,
-      errors,
-      opts: cli.flags,
-      taskName: taskChoice,
-    });
-    sendEmail({
-      to: emailLog,
-      from: settings.log.from,
-      subject,
-      text: taskReport,
-    });
   }
 
   const timestamp = DateTime.local()

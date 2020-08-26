@@ -6,6 +6,7 @@ require('dotenv').config({
 module.exports = {
   postmark: {
     apiKey: process.env.postmark_api_key,
+    // apiKey: 'POSTMARK_API_TEST',
   },
   jex: {
     user: process.env.jex_username,

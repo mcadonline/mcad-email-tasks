@@ -18,20 +18,31 @@
     <main>
       <header class="email-header">
         <div class="header-image">🚀</div>
-        <h1>{{courseName}} <strong>IS OPEN!</strong></h1>
+        {{#if hasMultipleCourses }}
+        <h1>
+          Your Classes<br>
+          are OPEN!
+        </h1>
+        {{else}}
+        <h1>
+          Your Class<br>
+          is OPEN!
+        </h1> {{/if}}
       </header>
 
       <p>Hello {{ firstName }},</p>
 
       <p>
-        Your course's Canvas classroom is now OPEN:
+        The following courses are now open on Canvas:
       </p>
 
+      {{#each courses }}
       <div class="info-box course-info">
         <p><b>{{courseName}} ({{term}} {{year}})</b></p>
-        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{courseCode}} • {{ facultyFirstName }} {{ facultyLastName }} • {{credits}}</p>
         <p>{{startDate}} – {{endDate}}</p>
       </div>
+      {{/each}}
 
       <h2>Step 1</h2>
 
@@ -86,18 +97,6 @@
         <li>Find your remote class meeting link (it's probably with the syllabus)</li>
         <li>Check out what's planned for the first week of class</li>
       </ul>
-
-      <section class="callout">
-        <i class="callout__icon">⚠️</i>
-        <div class="callout__contents">
-          <h3 class="callout__heading">Note</h3>
-          <p>
-            Most classes will be using Canvas LMS this semester, but some faculty have opted to continue using the old
-            Blackboard system. You will see a message in your Canvas class redirecting you to Blackboard if this is the
-            case.
-          </p>
-        </div>
-      </section>
 
       <h2>Questions? Need Help?</h2>
 

@@ -124,16 +124,10 @@ main {
 
 h1 {
   color: #2f3133;
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0;
   line-height: 1.2;
-}
-
-h1 > strong {
-  color: #2f3133;
-  display: block;
-  font-size: 2rem;
 }
 
 h2 {

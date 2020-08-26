@@ -2,6 +2,7 @@ const path = require('path');
 const generateEmails = require('../../lib/generateEmails');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
+const { values, pick, groupBy } = require('ramda');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -14,16 +15,12 @@ const createSQL = ({ today }) => {
   declare @weekfromnow  datetime;
   set @today = ${quotedDateOrGetDate}
   set @tomorrow = dateadd(day,1,@today);
-  set @weekfromnow = dateadd(day, cast(7 as int), @today);
   
   select distinct nm.id_num as id
-  , CRS_DIV
-  , stud_div
   , rtrim(am_meml.addr_line_2) as username
   , rtrim(am_meml.addr_line_1) as mcadEmail
   , rtrim(am_peml.addr_line_1) as personalEmail
-  , rtrim(nm.first_name) as firstName
-  , rtrim(nm.preferred_name) as preferredName
+  , COALESCE(NULLIF(nm.preferred_name,''), nm.first_name) as firstName
   , rtrim(nm.last_name) as lastName
   , rtrim(sch.crs_cde) as courseCode
   , rtrim(sch.trm_cde) as term
@@ -36,7 +33,8 @@ const createSQL = ({ today }) => {
   , sch.credit_hrs as credits
   , ss.begin_dte as startDate
   , ss.end_dte as endDate
-  , DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte) as sundayBeforeStart
+  , COALESCE(NULLIF(nm_faculty.preferred_name,''), nm_faculty.first_name) as facultyFirstName
+  , nm_faculty.LAST_NAME as facultyLastName
   from student_crs_hist sch
     inner join name_master nm
     on sch.id_num = nm.id_num
@@ -50,6 +48,12 @@ const createSQL = ({ today }) => {
     on ss.crs_cde = sch.crs_cde
       and ss.trm_cde = sch.trm_cde
       and ss.yr_cde = sch.yr_cde
+    left join SECTION_MASTER sm
+      on sch.CRS_CDE = sm.CRS_CDE
+      and sch.TRM_CDE = sm.TRM_CDE
+      and sch.YR_CDE = sm.YR_CDE
+    left join NAME_MASTER nm_faculty
+      on sm.LEAD_INSTRUCTR_ID = nm_faculty.ID_NUM
   where 
     -- only remote courses
     ss.room_cde = 'REM'
@@ -69,25 +73,55 @@ const createSQL = ({ today }) => {
     -- dont send this notification if the course has already started
     and sch.ADD_DTE <= ss.BEGIN_DTE
   
-    and ( 
-      -- today is the sunday before the start date
-      @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
-      -- handle any late adds
-      --   i.e., if today is after the sunday before start
-      --   and their add_dte is EXACTLY today
-        or (
-          @today > DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
-          and sch.add_dte > @today
-          and sch.add_dte < @tomorrow
-        )
-    )
+    -- today is the sunday before the start date
+    and @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
   `;
 };
 
 async function getListOfRecords({ today }) {
   const sql = createSQL({ today });
   const records = await jex.query(sql).then(cleanJexData);
-  return records;
+
+  const getStudentInfoFromRecord = pick([
+    'id',
+    'username',
+    'firstName',
+    'lastName',
+    'mcadEmail',
+    'personalEmail',
+  ]);
+
+  const getCourseInfoFromRecord = pick([
+    'courseCode',
+    'term',
+    'year',
+    'courseName',
+    'credits',
+    'startDate',
+    'endDate',
+    'openDate',
+    'facultyFirstName',
+    'facultyLastName',
+  ]);
+
+  const createStudentWithCourseList = studentRecords => {
+    if (!studentRecords.length) throw Error('student must have at least one record');
+
+    const student = getStudentInfoFromRecord(studentRecords[0]);
+    const courses = studentRecords.map(getCourseInfoFromRecord);
+    return {
+      ...student,
+      hasMultipleCourses: courses.length > 1,
+      openDate: courses[0].openDate,
+      courses,
+    };
+  };
+
+  // group records by student, so that each student has a list
+  // of courses. We should only send one email per student
+  const coursesGroupedByStudentId = groupBy(x => x.id, records);
+  const studentsWithCourses = values(coursesGroupedByStudentId).map(createStudentWithCourseList);
+  return studentsWithCourses;
 }
 
 async function task({ today }) {

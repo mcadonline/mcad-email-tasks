@@ -23,26 +23,34 @@
 
       <header class="email-header">
         <div class="header-image">🎒</div>
-        <h1><strong>{{courseName}}</strong> Starts Soon</h1>
+        {{#if hasMultipleCourses }}
+        <h1>Your Classes<br> Start Next Week</h1>
+        {{else}}
+        <h1>Your Class<br> Starts Next Week</h1>
+        {{/if}}
       </header>
 
       <p>Hello {{ firstName }},</p>
 
+      {{#if hasMultipleCourses }}
+      <p>Your courses will begin soon:</p>
+      {{else}}
       <p>Your course will begin soon:</p>
+      {{/if}}
 
+      {{#each courses }}
       <div class="info-box course-info">
         <p><b>{{courseName}} ({{term}} {{year}})</b></p>
-        <p></p>
-        <p>{{courseCode}} • {{credits}}</p>
+        <p>{{courseCode}} • {{ facultyFirstName }} {{ facultyLastName }} • {{credits}}</p>
         <p>{{startDate}} – {{endDate}}</p>
       </div>
+      {{/each}}
 
       <h2>What's Next?</h2>
 
       <p>
-        Watch your email. This class has a remote meeting. Sometime this week your professor will email a
-        meeting link and details
-        about your first class meeting.
+        Watch your email. Your class has a remote meeting. Sometime this week faculty will email a
+        meeting link and details about your first class meeting.
       </p>
 
       <h2>When Can I Access My Class on Canvas?</h2>
