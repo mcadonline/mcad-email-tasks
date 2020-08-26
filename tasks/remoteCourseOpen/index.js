@@ -53,7 +53,6 @@ const createSQL = ({ today }) => {
   where 
     -- only remote courses
     ss.room_cde = 'REM'
-    and sch.CRS_DIV in ('GR') -- starting with only grad students
     -- ignore list
     and ss.room_cde <> 'OL' -- Not fully Online courses
     and sch.crs_div not in ('CE') -- No CE courses
