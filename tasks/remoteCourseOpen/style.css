@@ -143,14 +143,21 @@ h3 {
   font-size: 1rem;
 }
 
+.key-value {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  align-items: center;
+}
+
 .key-value .key {
   font-size: 0.75rem;
   text-transform: uppercase;
-  margin-top: 1rem;
+  display: inline-block;
+  margin-right: 1rem;
 }
 .key-value .value {
-  font-size: 1rem;
-  margin: 0;
+  font-family: monospace;
+  font-size: 1.25rem;
 }
 
 .step-by-step tr > td:first-of-type {
@@ -194,4 +201,13 @@ h3 {
 
 .callout__heading {
   margin: 0.5rem 0;
+}
+
+.questions-section h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.questions-section p {
+  margin-top: 0.5rem;
 }

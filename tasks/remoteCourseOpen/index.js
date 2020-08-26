@@ -56,9 +56,8 @@ const createSQL = ({ today }) => {
       on sm.LEAD_INSTRUCTR_ID = nm_faculty.ID_NUM
   where 
     -- only remote courses
-    ss.room_cde = 'REM'
+    ss.room_cde in ('REM','OL')
     -- ignore list
-    and ss.room_cde <> 'OL' -- Not fully Online courses
     and sch.crs_div not in ('CE') -- No CE courses
     and sch.crs_cde not like '% IN99 %' -- Internships
     and sch.crs_cde not like '% EX99 %' -- Externships
@@ -69,9 +68,6 @@ const createSQL = ({ today }) => {
     and sch.crs_cde not like 'MCAD %' -- MCADemy
     and sch.crs_cde not like 'OL   0% %' -- Online Learning Workshops
     and sch.transaction_sts not in ('W') -- dont include waitlisted students
-  
-    -- dont send this notification if the course has already started
-    and sch.ADD_DTE <= ss.BEGIN_DTE
   
     -- today is the sunday before the start date
     and @today = DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte)
