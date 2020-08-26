@@ -68,7 +68,7 @@ const createSQL = ({ today }) => {
     and sch.crs_cde not like 'DT %' -- Preregistration courses
     and sch.crs_cde not like 'MCAD %' -- MCADemy
     and sch.crs_cde not like 'OL   0% %' -- Online Learning Workshops
-    and sch.waitlist_flag is null -- dont include waitlisted students
+    and sch.transaction_sts not in ('W') -- dont include waitlisted students
   
     -- dont send this notification if the course has already started
     and sch.ADD_DTE <= ss.BEGIN_DTE
