@@ -49,7 +49,7 @@ where
   -- only online courses
   ss.room_cde = 'OL'
   -- no MCADemy emails
-  and sch.crs_cde not like 'MCAD 0101 %'
+  and sch.crs_cde not like 'MCAD %'
   -- ignore online workshops
   and sch.crs_cde not like 'OL   0% %'
   -- ignore GDC Adobe Workshops (1-day)

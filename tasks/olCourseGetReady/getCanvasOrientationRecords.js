@@ -51,6 +51,8 @@ inner join section_schedules ss
 where 
   -- only online courses
   ss.room_cde = 'OL'
+  -- ignore MCADemy-like courses
+  and sch.crs_cde not like 'MCAD %' 
   -- ignore online workshops
   and sch.crs_cde not like 'OL   0% %'
   -- dont include waitlisted

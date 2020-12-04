@@ -60,7 +60,7 @@ select distinct nm.id_num as id
      ) 
      and sch.stud_div = 'CE' -- only send to CE students (not postbacc students)
      and sm.crs_cde not like 'SE   100%' --ignore PCSS courses
-     and sm.crs_cde not like 'MCAD 0101 %' -- ignore MCADemy
+     and sm.crs_cde not like 'MCAD %' -- ignore MCADemy-like courses
      and sch.crs_cde not like 'OL   0% %' -- ignore online workshops
      and ss.room_cde <> 'OL' -- ignore Online Learning courses
      and transaction_sts in ('C','P','H') -- ignore waitlisted, dropped, or historical students (withdrawn, grade submitted)
