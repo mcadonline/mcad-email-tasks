@@ -15,6 +15,7 @@ describe('jex service', () => {
       `;
 
       const records = await jex.query(sql);
+      await jex.close();
       expect(records.length).toBe(2);
       expect(records[0]).toEqual({
         academicYear: 2015,
