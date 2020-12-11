@@ -54,6 +54,8 @@ where ss.room_cde = 'OL'
   and sch.crs_cde not like 'GD   6413 %'
   and sch.crs_cde not like 'GD   6511 %'
   and sch.crs_cde not like 'OL   0% %'
+  -- no pre-registration placeholders
+  and sch.crs_cde not like 'DT %'
   and add_dte > @today
   and add_dte < @tomorrow
   -- current or preregistered students

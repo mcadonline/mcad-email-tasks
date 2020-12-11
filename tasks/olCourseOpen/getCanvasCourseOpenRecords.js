@@ -56,6 +56,8 @@ where
   and sch.crs_cde not like 'GD   6411 %'
   and sch.crs_cde not like 'GD   6413 %'
   and sch.crs_cde not like 'GD   6511 %'
+  -- no pre-registration placeholders
+  and sch.crs_cde not like 'DT %'
   -- current, preregistered students
   -- this eliminates the case where add_dte
   -- gets updated for drops and withdrawals
