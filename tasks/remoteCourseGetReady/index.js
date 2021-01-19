@@ -137,7 +137,7 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => 'MCAD Online Learning <online@mcad.edu>',
+    bcc: () => 'James Johnson <james_johnson@mcad.edu>',
     requiredFields: ['username', 'personalEmail'],
   });
 }
