@@ -13,7 +13,7 @@ describe('cePapercut', () => {
       '✏️ Advanced Typography Bootcamp begins soon! Setup your MCAD Account now.',
     );
     // contains username
-    expect(/ Username dmarkworth/.test(text)).toBeTruthy();
+    expect(/Username dmarkworth/.test(text)).toBeTruthy();
   });
   it('does not include hybridCanvas courses', async () => {
     // TODO: Improve Test
