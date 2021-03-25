@@ -44,10 +44,10 @@ const validTasks = {
   // ce remote course tasks
   'ce-course-get-ready': ceCourseGetReady,
 };
-const isValidTask = t => !!validTasks[t];
+const isValidTask = (t) => !!validTasks[t];
 const stringifyTasks = (tasks = validTasks) =>
   Object.keys(tasks)
-    .map(t => `\n\t    ${t}`)
+    .map((t) => `\n\t    ${t}`)
     .join(' ');
 
 const createLogSubject = ({ emails, errors, opts, taskName }) =>
@@ -99,7 +99,6 @@ async function main() {
         },
         emailLog: {
           type: 'string',
-          default: false,
         },
       },
     },
@@ -144,9 +143,7 @@ async function main() {
     }
 
     if (emails.length && preview) {
-      previewEmail(emails[0])
-        .then(log)
-        .catch(log);
+      previewEmail(emails[0]).then(log).catch(log);
     }
 
     if (emailLog) {
@@ -168,10 +165,7 @@ async function main() {
     log(error);
   }
 
-  const timestamp = DateTime.local()
-    .toISO()
-    .replace(/[-:T]/g, '')
-    .replace(/\..+$/, '');
+  const timestamp = DateTime.local().toISO().replace(/[-:T]/g, '').replace(/\..+$/, '');
 
   const filename = `${taskChoice}-${timestamp}.log`;
   const fileDest = path.join(__dirname, './tmp', filename);
