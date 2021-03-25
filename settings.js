@@ -15,6 +15,7 @@ module.exports = {
     database: process.env.jex_database,
     options: {
       useUTC: false,
+      enableArithAbort: true,
     },
   },
   ldap: {
