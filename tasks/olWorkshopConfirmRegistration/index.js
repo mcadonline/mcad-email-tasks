@@ -2,6 +2,7 @@ const path = require('path');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
 const generateEmails = require('../../lib/generateEmails');
+const { salesforce } = require('../../settings');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -71,8 +72,7 @@ async function task({ today }) {
         personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () =>
-      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'mcadEmail'],
   });
 }

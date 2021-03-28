@@ -1,6 +1,7 @@
 const path = require('path');
 const getCanvasOrientationRecords = require('./getCanvasOrientationRecords');
 const generateEmails = require('../../lib/generateEmails');
+const settings = require('../../settings');
 
 async function task({ today }) {
   const records = await getCanvasOrientationRecords({ today });
@@ -14,8 +15,7 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () =>
-      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
 }

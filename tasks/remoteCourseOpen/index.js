@@ -3,6 +3,7 @@ const generateEmails = require('../../lib/generateEmails');
 const jex = require('../../services/jex');
 const cleanJexData = require('../../lib/cleanJexData');
 const { values, pick, groupBy } = require('ramda');
+const { salesforce } = require('../../settings');
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -100,7 +101,7 @@ async function getListOfRecords({ today }) {
     'facultyLastName',
   ]);
 
-  const createStudentWithCourseList = studentRecords => {
+  const createStudentWithCourseList = (studentRecords) => {
     if (!studentRecords.length) throw Error('student must have at least one record');
 
     const student = getStudentInfoFromRecord(studentRecords[0]);
@@ -115,7 +116,7 @@ async function getListOfRecords({ today }) {
 
   // group records by student, so that each student has a list
   // of courses. We should only send one email per student
-  const coursesGroupedByStudentId = groupBy(x => x.id, records);
+  const coursesGroupedByStudentId = groupBy((x) => x.id, records);
   const studentsWithCourses = values(coursesGroupedByStudentId).map(createStudentWithCourseList);
   return studentsWithCourses;
 }
@@ -132,8 +133,7 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () =>
-      'MCAD Online Learning <online@mcad.edu>, ***REMOVED***',
+    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
 }
