@@ -3,6 +3,7 @@ const task = require('./index');
 
 describe('olCourseRegConfirm', () => {
   beforeEach(() => jest.clearAllMocks());
+  afterEach(() => jex.close());
 
   it('generates registration confirmation emails', async () => {
     const { emails, errors } = await task({ today: '2019-01-22' });

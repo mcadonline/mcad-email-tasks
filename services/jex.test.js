@@ -1,6 +1,10 @@
 const jex = require('./jex');
 
 describe('jex service', () => {
+  afterEach(() => {
+    jex.close();
+  });
+
   describe('.query', () => {
     it('queries JEX for a list of records', async () => {
       const sql = `
@@ -15,7 +19,6 @@ describe('jex service', () => {
       `;
 
       const records = await jex.query(sql);
-      await jex.close();
       expect(records.length).toBe(2);
       expect(records[0]).toEqual({
         academicYear: 2015,

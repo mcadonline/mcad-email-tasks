@@ -1,10 +1,12 @@
+const jex = require('../../services/jex');
 const getCanvasOrientationRecords = require('./getCanvasOrientationRecords');
 
 describe('getCanvasOrientationRecords', () => {
+  afterEach(() => jex.close());
   it('gets orientation records', async () => {
     const records = await getCanvasOrientationRecords({ today: '2020-01-14' });
     const sdEnrollments = records.filter(
-      enrollmentRecord => enrollmentRecord.courseCode === 'SD   6500 20',
+      (enrollmentRecord) => enrollmentRecord.courseCode === 'SD   6500 20',
     );
     expect(sdEnrollments.length).toBeGreaterThan(5);
 

@@ -1,6 +1,8 @@
+const jex = require('../../services/jex');
 const task = require('./index');
 
 describe('canvasCourseOpen', () => {
+  afterEach(() => jex.close());
   it('generates course open emails', async () => {
     const { emails, errors } = await task({ today: '2019-01-20' });
     expect(emails.length).toBeGreaterThan(100);

@@ -5,6 +5,7 @@ const settings = require('../settings');
 let pool = null;
 
 function jexClose() {
+  if (!pool) return;
   pool.close();
   pool = null;
 }

@@ -1,6 +1,11 @@
 const task = require('./index');
+const jex = require('../../services/jex');
 
 describe('cePapercut', () => {
+  afterEach(() => {
+    jex.close();
+  });
+
   it('generates papercut emails', async () => {
     const { emails, errors } = await task({ today: '2019-03-21' });
     expect(emails.length).toBe(8);

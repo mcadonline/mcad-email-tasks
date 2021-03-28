@@ -3,6 +3,7 @@ const task = require('./index');
 
 describe('olWorkshopRegConfirm', () => {
   beforeEach(() => jest.clearAllMocks());
+  afterEach(() => jex.close());
 
   it('generates an error if a record is missing MCAD email', async () => {
     jex.query = jest.fn().mockResolvedValue([
