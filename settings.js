@@ -28,4 +28,7 @@ module.exports = {
     to: process.env.log_to,
     from: process.env.log_from,
   },
+  salesforce: {
+    email: process.env.salesforce_email,
+  },
 };
