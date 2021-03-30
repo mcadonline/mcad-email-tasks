@@ -10,40 +10,30 @@ const writeFile = require('./lib/writeFile');
 const sendEmail = require('./lib/sendEmail');
 const sendEmailBatch = require('./lib/sendEmailBatch');
 const createTaskReport = require('./lib/createTaskReport');
+const jex = require('./services/jex');
 
-// online course tasks
+// tasks
 const olCourseConfirmRegistration = require('./tasks/olCourseConfirmRegistration');
 const olCourseGetReady = require('./tasks/olCourseGetReady');
 const olCourseOpen = require('./tasks/olCourseOpen');
-
-// online workshop tasks
 const olWorkshopConfirmRegistration = require('./tasks/olWorkshopConfirmRegistration');
-
-// remote course tasks
 const remoteCourseGetReady = require('./tasks/remoteCourseGetReady');
 const remoteCourseOpen = require('./tasks/remoteCourseOpen');
-
-// remote ce course tasks
 const ceCourseGetReady = require('./tasks/ceCourseGetReady');
-const jex = require('./services/jex');
+const reportCartChecker = require('./tasks/reportCartChecker');
 
 // Tasks
 const validTasks = {
-  // online course tasks
+  'ce-course-get-ready': ceCourseGetReady,
   'ol-course-confirm-registration': olCourseConfirmRegistration,
   'ol-course-get-ready': olCourseGetReady,
   'ol-course-open': olCourseOpen,
-
-  // online workshop tasks
   'ol-workshop-confirm-registration': olWorkshopConfirmRegistration,
-
-  // remote course tasks
   'remote-course-get-ready': remoteCourseGetReady,
   'remote-course-open': remoteCourseOpen,
-
-  // ce remote course tasks
-  'ce-course-get-ready': ceCourseGetReady,
+  'report-cart-checker': reportCartChecker,
 };
+
 const isValidTask = (t) => !!validTasks[t];
 const stringifyTasks = (tasks = validTasks) =>
   Object.keys(tasks)

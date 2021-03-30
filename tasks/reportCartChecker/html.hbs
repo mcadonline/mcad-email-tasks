@@ -1,0 +1,102 @@
+<html>
+<head>
+  <link rel="stylesheet" href="style.css" data-inline="data-inline">
+</head>
+<body>
+  <h1>Daily MCAD Cart Report</h1>
+
+  <p>
+    <a class="btn" href="https://mcad.edu/user">Login To Cart</a>
+  </p>
+
+  <h2>Needs Updating</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-head__status"></th>
+        <th class="col-head__course-name">Course</th>
+        <th>Jenzabar Enrollment</th>
+        <th>Jenzabar Seats Left</th>
+        <th>Cart Seats Left</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cartCoursesNeedingUpdate }}
+      <tr>
+        <td class="row__is-bad"></td>
+        <td>
+          <a href={{this.url}}>
+            <p class="course-name">{{this.title}}</p>
+            <p class="course-id">{{this.courseId}}</p>
+          </a>
+        </td>
+        <td><a href={{this.url}}>{{this.jexEnrollment}}</a></td>
+        <td><a href={{this.url}}>{{this.jexSeatsRemaining}}</a></td>
+        <td><a href={{this.url}}>{{this.cartSeatsRemaining}}</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <h2>Courses Up-to-date</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-head__status">
+          <a href={{this.url}}>&nbsp;</a>
+        </th>
+        <th class="col-head__course-name">Course</th>
+        <th>Jenzabar Enrollment</th>
+        <th>Jenzabar Seats Left</th>
+        <th>Cart Seats Left</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cartCoursesUpToDate }}
+      <tr>
+        <td class="row__is-good">
+          <a href={{this.url}}>&nbsp;</a>
+        </td>
+        <td>
+          <a href={{this.url}}>
+            <p class="course-name">{{this.title}}</p>
+            <p class="course-id">{{this.courseId}}</p>
+          </a>
+        </td>
+        <td><a href={{this.url}}>{{this.jexEnrollment}}</a></td>
+        <td><a href={{this.url}}>{{this.jexSeatsRemaining}}</a></td>
+        <td><a href={{this.url}}>{{this.cartSeatsRemaining}}</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+
+  <h2>Courses Not Found in Cart</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-head__status">&nbsp;</th>
+        <th class="col-head__course-name">Course</th>
+        <th>Jenzabar Enrollment</th>
+        <th>Jenzabar Seats Left</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each jexCoursesNotInCart }}
+      <tr>
+        <td class="row__is-neutral">
+          &nbsp;
+        </td>
+        <td>
+          <p class="course-name">{{this.title}}</p>
+          <p class="course-id">{{this.courseId}}</p>
+        </td>
+        <td>{{this.jexEnrollment}}</td>
+        <td>{{this.jexSeatsRemaining}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -24,6 +24,7 @@
     "prettier": "2.2.1"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "email-templates": "8.0.4",
     "handlebars": "4.7.7",
