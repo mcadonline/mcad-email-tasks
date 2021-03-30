@@ -71,7 +71,7 @@ function reduceToCartCoursesNeedingUpdate({ cartCourses, jexCourses }) {
 
 function reduceToCartCoursesUpToDate({ cartCourses, jexCourses }) {
   const jexDict = indexBy(prop('courseId'), jexCourses);
-  cartCourses
+  return cartCourses
     .filter((cartCourse) => {
       const { courseId } = cartCourse;
       const jexCourse = jexDict[courseId];
@@ -115,8 +115,8 @@ async function task() {
   const { emails, errors } = await generateEmails({
     template: path.basename(__dirname),
     records,
-    to: () => [`James Johnson <james_johnson@mcad.edu>`].join(', '),
-    from: () => 'OL Cart Checker" <online@mcad.edu>',
+    to: () => ['"James Johnson" <james_johnson@mcad.edu>'].join(', '),
+    from: () => '"OL Cart Checker" <online@mcad.edu>',
   });
   return { emails, errors };
 }
