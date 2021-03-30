@@ -115,7 +115,7 @@ async function task() {
   const { emails, errors } = await generateEmails({
     template: path.basename(__dirname),
     records,
-    to: () => ['"James Johnson" <james_johnson@mcad.edu>'].join(', '),
+    to: () => ['"Online Learning" <online@mcad.edu>', '"Lara Roy" <lroy321@mcad.edu>'].join(', '),
     from: () => '"OL Cart Checker" <online@mcad.edu>',
   });
   return { emails, errors };
