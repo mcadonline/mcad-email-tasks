@@ -1,13 +1,13 @@
-const path = require('path');
-const getCanvasOrientationRecords = require('./getCanvasOrientationRecords');
-const generateEmails = require('../../lib/generateEmails');
-const settings = require('../../settings');
+import { basename } from 'path';
+import getCanvasOrientationRecords from './getCanvasOrientationRecords.js';
+import generateEmails from '../../lib/generateEmails.js';
+import settings from '../../settings.js';
 
 async function task({ today }) {
   const records = await getCanvasOrientationRecords({ today });
 
   return generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
@@ -15,9 +15,9 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
+    bcc: () => [settings.salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
 }
 
-module.exports = task;
+export default task;

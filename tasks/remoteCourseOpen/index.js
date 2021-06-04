@@ -1,9 +1,9 @@
-const path = require('path');
-const generateEmails = require('../../lib/generateEmails');
-const jex = require('../../services/jex');
-const cleanJexData = require('../../lib/cleanJexData');
-const { values, pick, groupBy } = require('ramda');
-const { salesforce } = require('../../settings');
+import { values, pick, groupBy } from 'ramda';
+import { basename } from 'path';
+import generateEmails from '../../lib/generateEmails.js';
+import jex from '../../services/jex.js';
+import cleanJexData from '../../lib/cleanJexData.js';
+import settings from '../../settings.js';
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -125,7 +125,7 @@ async function task({ today }) {
   const records = await getListOfRecords({ today });
 
   return generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
@@ -133,9 +133,9 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
+    bcc: () => [settings.salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
 }
 
-module.exports = task;
+export default task;

@@ -1,26 +1,26 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const meow = require('meow');
-const { DateTime } = require('luxon');
-const previewEmail = require('preview-email');
-const settings = require('./settings');
-const log = require('./lib/log');
-const writeFile = require('./lib/writeFile');
-const sendEmail = require('./lib/sendEmail');
-const sendEmailBatch = require('./lib/sendEmailBatch');
-const createTaskReport = require('./lib/createTaskReport');
-const jex = require('./services/jex');
+import { join } from 'path';
+import meow from 'meow';
+import { DateTime } from 'luxon';
+import previewEmail from 'preview-email';
+import settings from './settings.js';
+import log from './lib/log.js';
+import writeFile from './lib/writeFile.js';
+import sendEmail from './lib/sendEmail.js';
+import sendEmailBatch from './lib/sendEmailBatch.js';
+import createTaskReport from './lib/createTaskReport.js';
+import jex from './services/jex.js';
 
 // tasks
-const olCourseConfirmRegistration = require('./tasks/olCourseConfirmRegistration');
-const olCourseGetReady = require('./tasks/olCourseGetReady');
-const olCourseOpen = require('./tasks/olCourseOpen');
-const olWorkshopConfirmRegistration = require('./tasks/olWorkshopConfirmRegistration');
-const remoteCourseGetReady = require('./tasks/remoteCourseGetReady');
-const remoteCourseOpen = require('./tasks/remoteCourseOpen');
-const ceCourseGetReady = require('./tasks/ceCourseGetReady');
-const reportCartChecker = require('./tasks/reportCartChecker');
+import olCourseConfirmRegistration from './tasks/olCourseConfirmRegistration/index.js';
+import olCourseGetReady from './tasks/olCourseGetReady/index.js';
+import olCourseOpen from './tasks/olCourseOpen/index.js';
+import olWorkshopConfirmRegistration from './tasks/olWorkshopConfirmRegistration/index.js';
+import remoteCourseGetReady from './tasks/remoteCourseGetReady/index.js';
+import remoteCourseOpen from './tasks/remoteCourseOpen/index.js';
+import ceCourseGetReady from './tasks/ceCourseGetReady/index.js';
+import reportCartChecker from './tasks/reportCartChecker/index.js';
 
 // Tasks
 const validTasks = {
@@ -158,7 +158,7 @@ async function main() {
   const timestamp = DateTime.local().toISO().replace(/[-:T]/g, '').replace(/\..+$/, '');
 
   const filename = `${taskChoice}-${timestamp}.log`;
-  const fileDest = path.join(__dirname, './tmp', filename);
+  const fileDest = join(__dirname, './tmp', filename);
   log(`\n👍  Output: ${fileDest}`);
   await writeFile(fileDest, log().join('\n')).catch(console.error);
 

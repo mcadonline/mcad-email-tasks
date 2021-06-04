@@ -1,8 +1,8 @@
-const { indexBy, prop } = require('ramda');
-const path = require('path');
-const generateEmails = require('../../lib/generateEmails');
-const getOLCoursesInCart = require('./getOLCoursesInCart');
-const getOLCoursesInJex = require('./getOLCoursesInJex');
+import { indexBy, prop } from 'ramda';
+import { basename } from 'path';
+import generateEmails from '../../lib/generateEmails.js';
+import getOLCoursesInCart from './getOLCoursesInCart.js';
+import getOLCoursesInJex from './getOLCoursesInJex.js';
 
 const jexCourseExists = (jexCourse) => !!jexCourse;
 const isOnlineCourse = (jexCourse) => jexCourse && jexCourse.room === 'OL';
@@ -113,7 +113,7 @@ async function task() {
   ];
 
   const { emails, errors } = await generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: () => ['"Online Learning" <online@mcad.edu>', '"Lara Roy" <lroy321@mcad.edu>'].join(', '),
     from: () => '"OL Cart Checker" <online@mcad.edu>',
@@ -121,4 +121,4 @@ async function task() {
   return { emails, errors };
 }
 
-module.exports = task;
+export default task;

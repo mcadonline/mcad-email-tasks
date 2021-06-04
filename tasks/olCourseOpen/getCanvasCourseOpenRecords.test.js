@@ -1,5 +1,5 @@
-const jex = require('../../services/jex');
-const getCanvasCourseOpenRecords = require('./getCanvasCourseOpenRecords');
+import jex from '../../services/jex.js';
+import getCanvasCourseOpenRecords from './getCanvasCourseOpenRecords.js';
 
 describe('getCanvasCourseOpenRecords', () => {
   afterEach(() => jex.close());

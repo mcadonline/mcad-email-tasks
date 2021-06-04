@@ -1,5 +1,5 @@
-const jex = require('../../services/jex');
-const task = require('./index');
+import jex from '../../services/jex.js';
+import task from './index.js';
 
 describe('canvasCourseOpen', () => {
   afterEach(() => jex.close());

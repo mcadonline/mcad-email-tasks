@@ -1,5 +1,5 @@
-const jex = require('../../services/jex');
-const cleanJexData = require('../../lib/cleanJexData');
+import jex from '../../services/jex.js';
+import cleanJexData from '../../lib/cleanJexData.js';
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -83,4 +83,4 @@ async function getCanvasCourseOpenRecords({ today }) {
   return records;
 }
 
-module.exports = getCanvasCourseOpenRecords;
+export default getCanvasCourseOpenRecords;

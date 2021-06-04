@@ -1,5 +1,5 @@
-const jex = require('../../services/jex');
-const getCanvasOrientationRecords = require('./getCanvasOrientationRecords');
+import jex from '../../services/jex.js';
+import getCanvasOrientationRecords from './getCanvasOrientationRecords.js';
 
 describe('getCanvasOrientationRecords', () => {
   afterEach(() => jex.close());

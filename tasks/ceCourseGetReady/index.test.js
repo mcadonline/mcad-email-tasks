@@ -1,5 +1,5 @@
-const task = require('./index');
-const jex = require('../../services/jex');
+import task from './index.js';
+import jex from '../../services/jex.js';
 
 describe('cePapercut', () => {
   afterEach(() => {

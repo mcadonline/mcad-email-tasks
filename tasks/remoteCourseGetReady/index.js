@@ -1,8 +1,8 @@
-const path = require('path');
-const generateEmails = require('../../lib/generateEmails');
-const jex = require('../../services/jex');
-const cleanJexData = require('../../lib/cleanJexData');
-const { values, pick, groupBy } = require('ramda');
+import { values, pick, groupBy } from 'ramda';
+import { basename } from 'path';
+import generateEmails from '../../lib/generateEmails.js';
+import jex from '../../services/jex.js';
+import cleanJexData from '../../lib/cleanJexData.js';
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -105,7 +105,7 @@ async function getListOfRecords({ today }) {
     'facultyLastName',
   ]);
 
-  const createStudentWithCourseList = studentRecords => {
+  const createStudentWithCourseList = (studentRecords) => {
     if (!studentRecords.length) throw Error('student must have at least one record');
 
     const student = getStudentInfoFromRecord(studentRecords[0]);
@@ -120,7 +120,7 @@ async function getListOfRecords({ today }) {
 
   // group records by student, so that each student has a list
   // of courses. We should only send one email per student
-  const coursesGroupedByStudentId = groupBy(x => x.id, records);
+  const coursesGroupedByStudentId = groupBy((x) => x.id, records);
   const studentsWithCourses = values(coursesGroupedByStudentId).map(createStudentWithCourseList);
   return studentsWithCourses;
 }
@@ -129,7 +129,7 @@ async function task({ today }) {
   const records = await getListOfRecords({ today });
 
   return generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
@@ -142,4 +142,4 @@ async function task({ today }) {
   });
 }
 
-module.exports = task;
+export default task;

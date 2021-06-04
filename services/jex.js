@@ -1,5 +1,5 @@
-const sql = require('mssql');
-const settings = require('../settings');
+import mssql from 'mssql';
+import settings from '../settings.js';
 
 // holds the connection pool
 let pool = null;
@@ -13,7 +13,7 @@ function jexClose() {
 async function jexQuery(query) {
   try {
     if (!pool) {
-      pool = await sql.connect(settings.jex);
+      pool = await mssql.connect(settings.jex);
     }
     const result = await pool.request().query(query);
     return result.recordset;
@@ -23,7 +23,7 @@ async function jexQuery(query) {
   }
 }
 
-module.exports = {
+export default {
   query: jexQuery,
   close: jexClose,
 };

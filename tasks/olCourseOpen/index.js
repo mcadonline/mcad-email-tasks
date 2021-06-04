@@ -1,13 +1,17 @@
-const path = require('path');
-const generateEmails = require('../../lib/generateEmails');
-const getCanvasCourseOpenRecords = require('./getCanvasCourseOpenRecords');
-const { salesforce } = require('../../settings');
+import { basename, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import generateEmails from '../../lib/generateEmails.js';
+import getCanvasCourseOpenRecords from './getCanvasCourseOpenRecords.js';
+import settings from '../../settings.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 async function task({ today }) {
   const records = await getCanvasCourseOpenRecords({ today });
 
   return generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
@@ -15,9 +19,9 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
+    bcc: () => [settings.salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
 }
 
-module.exports = task;
+export default task;

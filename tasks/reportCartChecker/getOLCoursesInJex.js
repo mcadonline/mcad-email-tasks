@@ -1,4 +1,4 @@
-const jex = require('../../services/jex');
+import jex from '../../services/jex.js';
 
 const createSQL = () => `
     declare @today datetime;
@@ -50,17 +50,8 @@ function getShortYear(year) {
  * @param {Object} course - raw course returned from Jex query
  */
 function normalizeJexCourse(course) {
-  const {
-    courseCode,
-    term,
-    year,
-    title,
-    enrollment,
-    enrollmentCap,
-    startDate,
-    endDate,
-    room,
-  } = course;
+  const { courseCode, term, year, title, enrollment, enrollmentCap, startDate, endDate, room } =
+    course;
   const hyphenatedCourseCode = courseCode.split(/\s+/).join('-');
   const courseId = `${hyphenatedCourseCode}-${term}${getShortYear(year)}`;
   return {
@@ -81,4 +72,4 @@ async function getOLCoursesInJex() {
   return courses.map(normalizeJexCourse);
 }
 
-module.exports = getOLCoursesInJex;
+export default getOLCoursesInJex;

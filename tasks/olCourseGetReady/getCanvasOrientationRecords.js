@@ -1,7 +1,5 @@
-const jex = require('../../services/jex');
-const cleanJexData = require('../../lib/cleanJexData');
-const withoutCoursesSql = require('../../lib/withoutCoursesSql');
-const settings = require('../../settings');
+import jex from '../../services/jex.js';
+import cleanJexData from '../../lib/cleanJexData.js';
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -77,4 +75,4 @@ async function getCanvasOrientationRecords({ today }) {
   return records;
 }
 
-module.exports = getCanvasOrientationRecords;
+export default getCanvasOrientationRecords;

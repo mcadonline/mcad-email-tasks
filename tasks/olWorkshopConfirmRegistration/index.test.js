@@ -1,12 +1,16 @@
-const jex = require('../../services/jex');
-const task = require('./index');
+import { jest } from '@jest/globals';
+import jex from '../../services/jex.js';
+import task from './index.js';
 
 describe('olWorkshopRegConfirm', () => {
-  beforeEach(() => jest.clearAllMocks());
-  afterEach(() => jex.close());
+  afterEach(() => {
+    jex.close();
+    jest.restoreAllMocks();
+  });
 
   it('generates an error if a record is missing MCAD email', async () => {
-    jex.query = jest.fn().mockResolvedValue([
+    jest.spyOn(jex, 'query');
+    jex.query.mockResolvedValue([
       {
         id: 1,
         username: 'user1',

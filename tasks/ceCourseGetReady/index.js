@@ -1,8 +1,12 @@
-const path = require('path');
-const jex = require('../../services/jex');
-const cleanJexData = require('../../lib/cleanJexData');
-const generateEmails = require('../../lib/generateEmails');
-const { salesforce } = require('../../settings');
+import { basename, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import jex from '../../services/jex.js';
+import cleanJexData from '../../lib/cleanJexData.js';
+import generateEmails from '../../lib/generateEmails.js';
+import settings from '../../settings.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date
@@ -85,7 +89,7 @@ async function task({ today }) {
   const records = await jex.query(sql).then(cleanJexData);
 
   const { emails, errors } = await generateEmails({
-    template: path.basename(__dirname),
+    template: basename(__dirname),
     records,
     to: ({ firstName, lastName, personalEmail, mcadEmail }) =>
       [
@@ -93,10 +97,10 @@ async function task({ today }) {
         `${firstName} ${lastName} <${mcadEmail}>`,
       ].join(', '),
     from: () => 'MCAD Continuing Education <continuing_education@mcad.edu>',
-    bcc: () => [salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
+    bcc: () => [settings.salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
     requiredFields: ['username', 'personalEmail'],
   });
   return { emails, errors };
 }
 
-module.exports = task;
+export default task;

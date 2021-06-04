@@ -1,12 +1,16 @@
-const path = require('path');
-require('dotenv').config({
-  path: path.resolve(__dirname, './.env'),
+import path from 'path';
+import dotenv from 'dotenv';
+
+// path relative to __dirname
+const pathname = path.resolve('./.env');
+
+dotenv.config({
+  path: pathname,
 });
 
-module.exports = {
+const settings = {
   postmark: {
     apiKey: process.env.postmark_api_key,
-    // apiKey: 'POSTMARK_API_TEST',
   },
   jex: {
     user: process.env.jex_username,
@@ -16,6 +20,8 @@ module.exports = {
     options: {
       useUTC: false,
       enableArithAbort: true,
+      encrypt: true,
+      trustServerCertificate: true,
     },
   },
   ldap: {
@@ -32,3 +38,5 @@ module.exports = {
     email: process.env.salesforce_email,
   },
 };
+
+export default settings;

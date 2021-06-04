@@ -1,5 +1,6 @@
-const jex = require('../../services/jex');
-const task = require('./index');
+import { jest } from '@jest/globals';
+import jex from '../../services/jex.js';
+import task from './index.js';
 
 describe('olCourseRegConfirm', () => {
   beforeEach(() => jest.clearAllMocks());

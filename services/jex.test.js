@@ -1,4 +1,4 @@
-const jex = require('./jex');
+import jex from './jex.js';
 
 describe('jex service', () => {
   afterEach(() => {
