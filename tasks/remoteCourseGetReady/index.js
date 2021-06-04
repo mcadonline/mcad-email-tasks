@@ -3,6 +3,10 @@ import { basename } from 'path';
 import generateEmails from '../../lib/generateEmails.js';
 import jex from '../../services/jex.js';
 import cleanJexData from '../../lib/cleanJexData.js';
+import getDirnameFromImportMeta from '../../lib/getDirnameFromImportMeta.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = getDirnameFromImportMeta(import.meta);
 
 const createSQL = ({ today }) => {
   // use cast(getdate() as date) to get only the date

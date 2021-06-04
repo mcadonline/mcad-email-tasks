@@ -1,4 +1,4 @@
-import { get } from 'axios';
+import axios from 'axios';
 
 function normalizeCartCourse(course) {
   const { SKU, title } = course;
@@ -17,7 +17,7 @@ function normalizeCartCourse(course) {
 
 async function getOLCoursesInCart() {
   try {
-    const res = await get('http://mcad.edu/online-stock-report');
+    const res = await axios.get('http://mcad.edu/online-stock-report');
     const data = res.data.nodes.map((item) => item.node).map(normalizeCartCourse);
     return data;
   } catch (err) {

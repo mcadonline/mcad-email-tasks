@@ -21,6 +21,10 @@ import remoteCourseGetReady from './tasks/remoteCourseGetReady/index.js';
 import remoteCourseOpen from './tasks/remoteCourseOpen/index.js';
 import ceCourseGetReady from './tasks/ceCourseGetReady/index.js';
 import reportCartChecker from './tasks/reportCartChecker/index.js';
+import getDirnameFromImportMeta from './lib/getDirnameFromImportMeta.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = getDirnameFromImportMeta(import.meta);
 
 // Tasks
 const validTasks = {
@@ -74,6 +78,7 @@ async function main() {
     $ mcad-email-tasks canvas-orientation --today 2019-01-15
 `,
     {
+      importMeta: import.meta,
       flags: {
         today: {
           type: 'string',

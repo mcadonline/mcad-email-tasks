@@ -3,6 +3,10 @@ import { basename } from 'path';
 import generateEmails from '../../lib/generateEmails.js';
 import getOLCoursesInCart from './getOLCoursesInCart.js';
 import getOLCoursesInJex from './getOLCoursesInJex.js';
+import getDirnameFromImportMeta from '../../lib/getDirnameFromImportMeta.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = getDirnameFromImportMeta(import.meta);
 
 const jexCourseExists = (jexCourse) => !!jexCourse;
 const isOnlineCourse = (jexCourse) => jexCourse && jexCourse.room === 'OL';
