@@ -61,7 +61,7 @@ const createSQL = ({ today }) => {
       on sm.LEAD_INSTRUCTR_ID = nm_faculty.ID_NUM
   where 
     -- only remote courses
-    ss.room_cde in ('REM','OL')
+    ss.room_cde in ('REM','OL','OLS','OLA')
     -- ignore list
     and sch.crs_div not in ('CE') -- No CE courses
     and sch.crs_cde not like '% IN99 %' -- Internships

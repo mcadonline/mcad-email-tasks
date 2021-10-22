@@ -24,7 +24,7 @@ const createSQL = () => `
       and sm.yr_cde = ss.yr_cde
     where 
     (
-      room_cde = 'OL'
+      room_cde in ('OL','OLS','OLA')
       or sm.INSTITUT_DIV_CDE = 'CE'
     )
     and x_listed_parnt_crs = sm.crs_cde

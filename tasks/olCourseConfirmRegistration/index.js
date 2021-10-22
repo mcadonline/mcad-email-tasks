@@ -51,7 +51,7 @@ left join address_master am_meml
 left join address_master am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
-where ss.room_cde = 'OL'
+where ss.room_cde in ('OL', 'OLS', 'OLA')
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD %'
   -- ignore GDC Adobe Workshops (1-day)

@@ -47,7 +47,7 @@ left join address_master am_peml
       and am_peml.addr_cde = 'PEML'
 where 
   -- only online courses
-  ss.room_cde = 'OL'
+  ss.room_cde in ('OL', 'OLS', 'OLA')
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD %'
   -- ignore online workshops

@@ -51,7 +51,7 @@ left join address_master am_meml
 left join address_master am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
-where ss.room_cde = 'OL'
+where ss.room_cde in ('OL', 'OLS', 'OLA')
     -- only workshop courses like OL-0xxx-xx
     and sch.crs_cde like 'OL   0% %'
     and add_dte > @today
