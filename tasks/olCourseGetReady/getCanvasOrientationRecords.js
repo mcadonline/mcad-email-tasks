@@ -48,7 +48,7 @@ inner join section_schedules ss
     and ss.yr_cde = sch.yr_cde
 where 
   -- only online courses
-  ss.room_cde = 'OL'
+  ss.room_cde in ('OL', 'OLS', 'OLA')
   -- no pre-registration placeholders
   and sch.crs_cde not like 'DT %'
   -- ignore MCADemy-like courses

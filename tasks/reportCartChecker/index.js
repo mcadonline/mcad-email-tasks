@@ -9,7 +9,7 @@ import getDirnameFromImportMeta from '../../lib/getDirnameFromImportMeta.js';
 const __dirname = getDirnameFromImportMeta(import.meta);
 
 const jexCourseExists = (jexCourse) => !!jexCourse;
-const isOnlineCourse = (jexCourse) => jexCourse && jexCourse.room === 'OL';
+const isOnlineCourse = (jexCourse) => jexCourse && (jexCourse.room === 'OL' || jexCourse.room === 'OLS' || jexCourse.room === 'OLA');
 const seatsRemainingAgree = ({ jexCourse, cartCourse }) =>
   jexCourse && cartCourse && jexCourse.seatsRemaining === cartCourse.seatsRemaining;
 
