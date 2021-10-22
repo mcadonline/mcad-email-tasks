@@ -92,5 +92,5 @@ $ ln -s ~/.env/mcad-email-tasks/.env.production ~/dev/mcad-email-tasks/.env
 $ mcad-email-tasks
 
 # setup cron to run mcad-email-tasks nightly at 6:30
-# TODO
+# *see crontab file in costanza-cron-scripts repository
 ```
