@@ -53,6 +53,9 @@ where
   and sch.crs_cde not like 'DT %'
   -- ignore MCADemy-like courses
   and sch.crs_cde not like 'MCAD %' 
+  -- ignore community / town hall style courses
+  and sch.crs_cde not like 'FDN  0123 %'
+  and sch.crs_cde not like 'CL   0123 %'
   -- ignore online workshops
   and sch.crs_cde not like 'OL   0% %'
   -- dont include waitlisted
