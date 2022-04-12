@@ -54,6 +54,9 @@ left join address_master am_peml
 where ss.room_cde in ('OL', 'OLS', 'OLA')
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD %'
+  -- ignore community / town hall style courses
+  and sch.crs_cde not like 'FDN  0123 %'
+  and sch.crs_cde not like 'CL   0123 %'
   -- ignore GDC Adobe Workshops (1-day)
   and sch.crs_cde not like 'GD   6411 %'
   and sch.crs_cde not like 'GD   6413 %'
