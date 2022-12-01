@@ -49,6 +49,8 @@ inner join section_schedules ss
 where 
   -- only online courses
   ss.room_cde in ('OL', 'OLS', 'OLA')
+  -- skip CE students
+  and sch.stud_div not in ('CE')
   -- no pre-registration placeholders
   and sch.crs_cde not like 'DT %'
   -- ignore MCADemy-like courses

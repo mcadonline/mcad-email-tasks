@@ -54,6 +54,8 @@ left join address_master am_peml
 where ss.room_cde in ('OL', 'OLS', 'OLA')
     -- only workshop courses like OL-0xxx-xx
     and sch.crs_cde like 'OL   0% %'
+    -- skip CE students
+    and sch.stud_div not in ('CE')
     and add_dte > @today
     and add_dte < @tomorrow
     -- current or preregistered students

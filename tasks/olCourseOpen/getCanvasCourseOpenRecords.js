@@ -48,6 +48,8 @@ left join address_master am_peml
 where 
   -- only online courses
   ss.room_cde in ('OL', 'OLS', 'OLA')
+  -- skip CE students
+  and sch.stud_div not in ('CE')
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD %'
   -- ignore community / town hall style courses
