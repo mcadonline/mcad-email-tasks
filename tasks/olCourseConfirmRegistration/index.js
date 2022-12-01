@@ -51,8 +51,8 @@ left join address_master am_meml
 left join address_master am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
-where ss.room_cde in ('OL', 'OLS', 'OLA')
-  -- no MCADemy emails
+where ss.room_cde in ('OLS', 'OLA')
+  -- no MCADemy emails OL Excluded
   and sch.crs_cde not like 'MCAD %'
   -- ignore community / town hall style courses
   and sch.crs_cde not like 'FDN  0123 %'

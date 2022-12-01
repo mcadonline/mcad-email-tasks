@@ -46,8 +46,8 @@ left join address_master am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
 where 
-  -- only online courses
-  ss.room_cde in ('OL', 'OLS', 'OLA')
+  -- only online courses OL Excluded
+  ss.room_cde in ('OLS', 'OLA')
   -- no MCADemy emails
   and sch.crs_cde not like 'MCAD %'
   -- ignore community / town hall style courses
