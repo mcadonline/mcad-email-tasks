@@ -16,9 +16,9 @@ select distinct nm.id_num as id
   , rtrim(nm.first_name) as firstName
   , rtrim(nm.preferred_name) as preferredName
   , rtrim(nm.last_name) as lastName
-  , rtrim(am_meml.addr_line_2) as username
-  , rtrim(am_meml.addr_line_1) as mcadEmail
-  , rtrim(am_peml.addr_line_1) as personalEmail
+  , rtrim(nmu.user_name) as username
+  , rtrim(am_meml.AlternateContact) as mcadEmail
+  , rtrim(am_peml.AlternateContact) as personalEmail
   , rtrim(sch.trm_cde) as term
   , rtrim(sch.crs_cde) as courseCode
   , year =
@@ -33,16 +33,18 @@ select distinct nm.id_num as id
   , sch.add_dte as createdAt
   , DATEADD(d, -1 * DATEPART(dw, ss.begin_dte) + 1, ss.begin_dte) as sundayBeforeStart
 from student_crs_hist sch
-inner join name_master nm
+inner join nameMaster nm
     on sch.id_num = nm.id_num
 inner join section_schedules ss
     on ss.crs_cde = sch.crs_cde
       and ss.trm_cde = sch.trm_cde
       and ss.yr_cde = sch.yr_cde
-left join address_master am_meml
+left join AlternateContactMethod am_meml
     on sch.id_num = am_meml.id_num
       and am_meml.addr_cde = 'MEML'
-left join address_master am_peml
+left join name_master_udf nmu
+    on nm.id_num = nmu.id_num
+left join AlternateContactMethod am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
 where 
