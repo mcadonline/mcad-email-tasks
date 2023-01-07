@@ -16,7 +16,7 @@ select distinct nm.id_num as id
   , rtrim(nm.first_name) as firstName
   , rtrim(nm.preferred_name) as preferredName
   , rtrim(nm.last_name) as lastName
-  , rtrim(nmu.user_name) as username
+  , rtrim(nmu.mcad_username) as username
   , rtrim(am_meml.AlternateContact) as mcadEmail
   , rtrim(am_peml.AlternateContact) as personalEmail
   , rtrim(sch.trm_cde) as term

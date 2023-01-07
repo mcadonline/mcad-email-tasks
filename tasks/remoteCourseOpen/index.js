@@ -22,7 +22,7 @@ const createSQL = ({ today }) => {
   set @tomorrow = dateadd(day,1,@today);
   
   select distinct nm.id_num as id
-  , rtrim(nmu.user_name) as username
+  , rtrim(nmu.mcad_username) as username
   , rtrim(am_meml.AlternateContact) as mcadEmail
   , rtrim(am_peml.AlternateContact) as personalEmail
   , COALESCE(NULLIF(nm.preferred_name,''), nm.first_name) as firstName

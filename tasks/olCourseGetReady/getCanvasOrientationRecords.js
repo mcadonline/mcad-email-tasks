@@ -15,7 +15,7 @@ set @tomorrow = dateadd(day,1,@today);
 set @weekfromnow = dateadd(day, cast(7 as int), @today);
 
 select distinct nm.id_num as id
-, rtrim(name_master_udf.user_name) as username
+, rtrim(nmu.mcad_username) as username
 , rtrim(am_meml.AlternateContact) as mcadEmail
 , rtrim(am_peml.AlternateContact) as personalEmail
 , rtrim(nm.first_name) as firstName
