@@ -35,7 +35,7 @@
     "handlebars": "4.7.7",
     "inquirer": "8.1.0",
     "lit-html": "1.4.1",
-    "luxon": "1.27.0",
+    "luxon": "1.28.1",
     "meow": "^10.0.0",
     "mssql": "7.1.0",
     "node-sass": "7.0.0",
