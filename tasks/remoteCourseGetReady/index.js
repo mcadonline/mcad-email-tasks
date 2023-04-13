@@ -22,9 +22,9 @@ const createSQL = ({ today }) => {
   set @weekfromnow = dateadd(day, cast(7 as int), @today);
   
   select distinct nm.id_num as id
-  , rtrim(am_meml.addr_line_2) as username
-  , rtrim(am_meml.addr_line_1) as mcadEmail
-  , rtrim(am_peml.addr_line_1) as personalEmail
+  , rtrim(nmu.mcad_username) as username
+  , rtrim(am_meml.AlternateContact) as mcadEmail
+  , rtrim(am_peml.AlternateContact) as personalEmail
   , COALESCE(NULLIF(nm.preferred_name,''), nm.first_name) as firstName
   , rtrim(nm.last_name) as lastName
   , rtrim(sch.crs_cde) as courseCode
@@ -41,14 +41,16 @@ const createSQL = ({ today }) => {
   , COALESCE(NULLIF(nm_faculty.preferred_name,''), nm_faculty.first_name) as facultyFirstName
   , nm_faculty.LAST_NAME as facultyLastName
   from student_crs_hist sch
-    inner join name_master nm
+    inner join nameMaster nm
     on sch.id_num = nm.id_num
-    left join address_master am_meml
+    left join AlternateContactMethod am_meml
     on sch.id_num = am_meml.id_num
       and am_meml.addr_cde = 'MEML'
-    left join address_master am_peml
+    left join AlternateContactMethod am_peml
     on sch.id_num = am_peml.id_num
       and am_peml.addr_cde = 'PEML'
+    left join name_master_udf nmu
+      on nm.id_num = nmu.id_num
     inner join section_schedules ss
     on ss.crs_cde = sch.crs_cde
       and ss.trm_cde = sch.trm_cde
@@ -57,7 +59,7 @@ const createSQL = ({ today }) => {
       on sch.CRS_CDE = sm.CRS_CDE
       and sch.TRM_CDE = sm.TRM_CDE
       and sch.YR_CDE = sm.YR_CDE
-    left join NAME_MASTER nm_faculty
+    left join nameMaster nm_faculty
       on sm.LEAD_INSTRUCTR_ID = nm_faculty.ID_NUM
   where 
     -- both remote and online courses

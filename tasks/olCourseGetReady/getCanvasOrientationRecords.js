@@ -15,9 +15,9 @@ set @tomorrow = dateadd(day,1,@today);
 set @weekfromnow = dateadd(day, cast(7 as int), @today);
 
 select distinct nm.id_num as id
-, rtrim(am_meml.addr_line_2) as username
-, rtrim(am_meml.addr_line_1) as mcadEmail
-, rtrim(am_peml.addr_line_1) as personalEmail
+, rtrim(nmu.mcad_username) as username
+, rtrim(am_meml.AlternateContact) as mcadEmail
+, rtrim(am_peml.AlternateContact) as personalEmail
 , rtrim(nm.first_name) as firstName
 , rtrim(nm.preferred_name) as preferredName
 , rtrim(nm.last_name) as lastName
@@ -34,25 +34,30 @@ select distinct nm.id_num as id
 , ss.end_dte as endDate
 , sch.add_dte as createdAt
 from student_crs_hist sch
-inner join name_master nm
+inner join nameMaster nm
   on sch.id_num = nm.id_num
-left join address_master am_meml
+left join AlternateContactMethod am_meml
   on sch.id_num = am_meml.id_num
 and am_meml.addr_cde = 'MEML'
-left join address_master am_peml
+left join AlternateContactMethod am_peml
   on sch.id_num = am_peml.id_num
     and am_peml.addr_cde = 'PEML'
+left join name_master_udf nmu
+  on nm.id_num = nmu.id_num
 inner join section_schedules ss
   on ss.crs_cde = sch.crs_cde
     and ss.trm_cde = sch.trm_cde
     and ss.yr_cde = sch.yr_cde
 where 
-  -- only online courses
-  ss.room_cde in ('OL', 'OLS', 'OLA')
+  -- only online courses OL excluded
+  ss.room_cde in ('OLS', 'OLA')
   -- no pre-registration placeholders
   and sch.crs_cde not like 'DT %'
   -- ignore MCADemy-like courses
   and sch.crs_cde not like 'MCAD %' 
+  -- ignore community / town hall style courses
+  and sch.crs_cde not like 'FDN  0123 %'
+  and sch.crs_cde not like 'CL   0123 %'
   -- ignore online workshops
   and sch.crs_cde not like 'OL   0% %'
   -- dont include waitlisted
