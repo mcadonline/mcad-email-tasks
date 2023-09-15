@@ -4,6 +4,7 @@ import jex from '../../services/jex.js';
 import cleanJexData from '../../lib/cleanJexData.js';
 import generateEmails from '../../lib/generateEmails.js';
 import settings from '../../settings.js';
+import parseBccEmail from '../../lib/bccEmailParser.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -81,7 +82,7 @@ async function task({ today }) {
         personalEmail ? `${firstName} ${lastName} <${personalEmail}>` : '',
       ].join(', '),
     from: () => 'MCAD Online Learning <online@mcad.edu>',
-    bcc: () => [settings.salesforce.email, 'MCAD Online Learning <online@mcad.edu>'].join(','),
+    bcc: () => parseBccEmail(),
     requiredFields: ['username', 'mcadEmail'],
   });
 }
