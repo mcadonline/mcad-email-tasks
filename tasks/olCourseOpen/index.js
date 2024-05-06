@@ -2,7 +2,6 @@ import { basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import generateEmails from '../../lib/generateEmails.js';
 import getCanvasCourseOpenRecords from './getCanvasCourseOpenRecords.js';
-import settings from '../../settings.js';
 import parseBccEmail from '../../lib/bccEmailParser.js';
 
 // eslint-disable-next-line no-underscore-dangle
