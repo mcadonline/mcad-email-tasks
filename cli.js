@@ -148,6 +148,13 @@ async function main() {
         opts: cli.flags,
         taskName: taskChoice,
       });
+      
+      if (settings.mailClient !== 'postmark') {
+        emailLog = emailLog.split(',').map((email) => {
+          email
+        })
+      }
+
       sendEmail({
         to: emailLog,
         from: settings.log.from,

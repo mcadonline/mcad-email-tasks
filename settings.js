@@ -12,6 +12,9 @@ const settings = {
   postmark: {
     apiKey: process.env.postmark_api_key,
   },
+  mandril: {
+    apiKey: process.env.mandril_api_key,
+  },
   jex: {
     user: process.env.jex_username,
     password: process.env.jex_password,
@@ -37,6 +40,7 @@ const settings = {
   salesforce: {
     email: process.env.salesforce_email,
   },
+  mailClient: process.env.mail_client,
 };
 
 export default settings;

@@ -19,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^27.0.3",
+    "@mailchimp/mailchimp_transactional": "^1.0.59",
     "eslint": "7.27.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "8.3.0",
