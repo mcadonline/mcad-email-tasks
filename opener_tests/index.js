@@ -6,6 +6,7 @@ import olWorkshopConfirmRegistration from '../tasks/olWorkshopConfirmRegistratio
 import remoteCourseGetReady from '../tasks/remoteCourseGetReady/index.js';
 import remoteCourseOpen from '../tasks/remoteCourseOpen/index.js';
 import reportCartChecker from '../tasks/reportCartChecker/index.js';
+import sendEmailBatch from '../lib/sendEmailBatch.js';
 
 import jex from '../services/jex.js';
 import * as fs from 'fs';
@@ -40,17 +41,21 @@ jex.query = async (sql) => {
 
 const ceCourseOpener = async () => {
     // ceCourse
+    // Same email for both personal and mcad Email
     mockedData = [{
         firstName: 'Jane',
         lastName: 'Doe',
         personalEmail: 'jan.doe@mcadem.com',
-        mcadEmail: 'jan@mcad.com',
+        mcadEmail: 'jan.doe@mcadem.com',
         username: 'jandoe'
     }];
 
     const { emails } = await olCourseConfirmRegistration({ today: '2019-03-21' });
     const { html } = emails[0];
 
+    // Testing purpose
+    process.env.sendTestEmail = '1';
+    await sendEmailBatch(emails);
     return html;
 }
 
