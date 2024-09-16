@@ -148,11 +148,16 @@ async function main() {
         opts: cli.flags,
         taskName: taskChoice,
       });
-      
+
       if (settings.mailClient !== 'postmark') {
-        emailLog = emailLog.split(',').map((email) => {
-          email
-        })
+        const emails = emailLog.split(',');
+
+        // Lets just send email to the first email that comes in
+        emailLog = [{
+          email: emails[0],
+          type: 'to',
+          name: 'Email Log'
+        }]
       }
 
       sendEmail({
