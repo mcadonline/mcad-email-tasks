@@ -149,11 +149,15 @@ async function main() {
         taskName: taskChoice,
       });
 
+      // There would be multiple emails, so chaning it to emailLogs.
+      let emailLogs = emailLog;
+
       if (settings.mailClient !== 'postmark') {
         const emails = emailLog.split(',');
+        log(`Sending logs to ${emails[0]}`);
 
         // Lets just send email to the first email that comes in
-        emailLog = [{
+        emailLogs = [{
           email: emails[0],
           type: 'to',
           name: 'Email Log'
@@ -161,7 +165,7 @@ async function main() {
       }
 
       sendEmail({
-        to: emailLog,
+        to: emailLogs,
         from: settings.log.from,
         subject,
         text: taskReport,
