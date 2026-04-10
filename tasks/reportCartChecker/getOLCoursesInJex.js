@@ -6,8 +6,8 @@ const createSQL = () => `
 
     select rtrim(sm.trm_cde) as term
     , year =
-        CASE sm.trm_cde
-          WHEN 'FA' THEN sm.yr_cde
+        CASE
+          WHEN sm.trm_cde IN ('FA', 'ST') THEN sm.yr_cde
           ELSE sm.yr_cde + 1
         END
     , rtrim(sm.crs_cde) as courseCode

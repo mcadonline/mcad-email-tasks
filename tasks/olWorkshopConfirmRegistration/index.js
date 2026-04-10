@@ -30,8 +30,8 @@ select distinct nm.id_num as id
   , rtrim(sch.trm_cde) as term
   , rtrim(sch.crs_cde) as courseCode
   , year =
-    CASE sch.trm_cde
-      WHEN 'FA' THEN sch.yr_cde
+    CASE
+      WHEN sch.trm_cde IN ('FA', 'ST') THEN sch.yr_cde
       ELSE sch.yr_cde + 1
     END
   , rtrim(concat(sch.crs_title, ' ', sch.crs_title_2)) as courseName
