@@ -4,6 +4,72 @@
 
 Supported:
 
+## Docker
+
+Install Docker Engine with Compose v2 (or Docker Desktop). No host Node.js
+installation is needed. From the repository root:
+
+```sh
+cp .env.example .env
+mkdir -p tmp
+# Edit .env with your database and email service credentials.
+docker compose build --pull
+docker compose run --rm tasks --help
+docker compose run --rm tasks ol-course-get-ready --today 2026-11-17
+```
+
+Tasks generate emails without sending them by default. Add `--send` explicitly
+to deliver emails. Containers need network access to Jenzabar and the selected
+email provider, including any required VPN connection. `localhost` inside Docker
+refers to the container; use a reachable database hostname (or
+`host.docker.internal` for a service on the Docker Desktop host).
+
+Logs persist in `./tmp`. The container runs as the `node` user (UID 1000); on
+Linux, ensure that user can write to this directory. The default timezone is
+`America/Chicago` for MCAD; override it with `TZ=America/Toronto docker compose run
+--rm tasks ...` when needed. This affects task dates and log timestamps.
+The `--preview` option launches a browser and requires a desktop environment;
+use it when running locally instead of in the container.
+
+For an interactive development shell with your checkout mounted into `/app`:
+
+```sh
+docker compose run --rm dev
+# Inside the container:
+node cli.js --help
+npm test -- --runInBand --runTestsByPath lib/generateEmails.test.js
+# Or execute any other repository script with node.
+exit
+```
+
+Source edits are shared with the host. Linux dependencies live in a separate
+Docker volume so host `node_modules` are not used. After dependency changes,
+rebuild and refresh that volume with `docker compose run --rm dev npm ci`.
+Some tests require a live Jenzabar database; running the entire suite requires
+appropriate credentials and network access.
+
+To use the image without Compose:
+
+```sh
+docker build --pull -t mcad-email-tasks .
+docker run --rm mcad-email-tasks --help
+docker run --rm --init --env-file .env -e TZ=America/Chicago \
+  -v "$PWD/tmp:/app/tmp" mcad-email-tasks ol-course-get-ready
+```
+
+The image contains code and production dependencies. Credentials and host
+dependencies are excluded from the build; supply credentials at runtime.
+
+### Node.js and Brotli security
+
+Use Node.js 24.22.1 or later in the 24.x line, including for local and cron
+execution (`nvm install && nvm use` reads `.nvmrc`). This minimum includes the
+fix for the bundled Brotli decoder vulnerability CVE-2026-111497 described in the
+[Node.js security advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases).
+Updating npm packages alone does not update Node's bundled Brotli decoder.
+The Docker build uses the latest Node 24 Debian image and checks this minimum.
+Rebuild with `docker compose build --pull` to receive runtime security updates.
+
 ## Usage
 
 ```sh
