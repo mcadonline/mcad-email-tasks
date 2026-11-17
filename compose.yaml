@@ -1,0 +1,29 @@
+services:
+  tasks:
+    build:
+      context: .
+      target: production
+    env_file: .env
+    environment:
+      TZ: ${TZ:-America/Chicago}
+    init: true
+    volumes:
+      - ./tmp:/app/tmp
+
+  dev:
+    build:
+      context: .
+      target: development
+    env_file: .env
+    environment:
+      TZ: ${TZ:-America/Chicago}
+    init: true
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+      - dev_node_modules:/app/node_modules
+    command: sh
+
+volumes:
+  dev_node_modules:

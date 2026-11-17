@@ -1,0 +1,12 @@
+.git
+node_modules
+.env
+.env.*
+!.env.example
+tmp
+coverage
+*.log
+.DS_Store
+.aws
+.codex
+.agents

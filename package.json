@@ -13,13 +13,12 @@
     "start": "./cli.js"
   },
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": ">=24.22.1 <25"
   },
   "author": "James Johnson <johnsojr@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^27.0.3",
-    "@mailchimp/mailchimp_transactional": "^1.0.59",
     "eslint": "7.27.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "8.3.0",
@@ -39,14 +38,14 @@
     "luxon": "1.27.0",
     "meow": "^10.0.0",
     "mssql": "7.1.0",
-    "node-sass": "7.0.0",
     "nodemon": "2.0.7",
     "ow": "^0.23.0",
     "postmark": "2.7.4",
     "preview-email": "3.0.4",
     "ramda": "0.27.1",
     "react": "17.0.2",
-    "write": "^2.0.0"
+    "write": "^2.0.0",
+    "@mailchimp/mailchimp_transactional": "^1.0.59"
   },
   "jest": {
     "testEnvironment": "node"
